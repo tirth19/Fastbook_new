@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "192306257951",
+    "firebase_url": "https://fastbook-11566.firebaseio.com",
+    "project_id": "fastbook-11566",
+    "storage_bucket": "fastbook-11566.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192306257951:android:9788a65170224d8694752a",
+        "android_client_info": {
+          "package_name": "com.gyansaarthi.fastbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "192306257951-svb819rrk3jtpraqidmklcq0rsjm1cra.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gyansaarthi.fastbook",
+            "certificate_hash": "e0be6cd7772cb27935c8f4709d5b6e3def2f01c4"
+          }
+        },
+        {
+          "client_id": "192306257951-45p9l82ivn9n3b8i40nvq1t3bj6uvjoq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCriTdUm-Cu-75sUY05B9gBuybEp26kPBk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "192306257951-45p9l82ivn9n3b8i40nvq1t3bj6uvjoq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

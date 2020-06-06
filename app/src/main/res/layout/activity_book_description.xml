@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BookDescriptionActivity"
+    android:orientation="vertical">
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/bookcoverImageView"
+        android:paddingTop="10dp"
+        android:outlineAmbientShadowColor="@color/colorAccent"
+        >
+    </ImageView>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="35dp"
+        android:id="@+id/bookTitleTextView"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="Book Title" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:id="@+id/authorTextView"
+        android:textColor="#878383"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="Book Title" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/readNowButton"
+        android:text="Read Now"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_background" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/descriptionTextView"
+        android:text="This is sample description of the book"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="#000000" />
+
+
+</LinearLayout>

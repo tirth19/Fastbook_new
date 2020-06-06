@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/book_parent_id">
+    <!--app:cardCornerRadius="6dp"
+    app:cardMaxElevation="2dp"
+    app:cardElevation="1dp"
+    android:layout_centerInParent="true"-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="400dp"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textColor="@android:color/black"
+                android:textSize="35dp"
+                android:textStyle="bold"
+                android:autoSizeMinTextSize="25sp"
+                android:autoSizeMaxTextSize="40sp"
+                android:layout_centerHorizontal="true"
+                android:text="12 Rules For Life" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/contentTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textSize="25dp"
+                android:autoSizeMinTextSize="15sp"
+                android:autoSizeMaxTextSize="35sp"
+                android:textColor="@android:color/black"
+                android:text="12 Rules For Life. The quick brown fox jumps over the lazy dog"
+                android:layout_below="@id/titleTextView"
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+    </ScrollView>
+</androidx.cardview.widget.CardView>

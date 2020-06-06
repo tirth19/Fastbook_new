@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    android:id="@+id/parent_id">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="235dp"
+            android:orientation="vertical">
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="195dp"
+                    android:scaleType="centerCrop"
+                    android:id="@+id/thumbnail"
+                    android:src="@drawable/hindi_collection"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="preview"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:id="@+id/author"
+                    android:maxLines="2"
+                    android:textColor="#2d2d2d"/>
+        </LinearLayout>
+</RelativeLayout>
+
