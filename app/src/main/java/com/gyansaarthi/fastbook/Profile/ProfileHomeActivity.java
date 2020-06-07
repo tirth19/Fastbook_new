@@ -1,10 +1,13 @@
 package com.gyansaarthi.fastbook.Profile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +47,7 @@ public class ProfileHomeActivity extends AppCompatActivity {
     private TextView mDisplayName;
     private CircleImageView mProfilePhoto;
     private Context mContext = ProfileHomeActivity.this;
+    private ImageView profilemenu;
 
     //firebase
     private FirebaseAuth mAuth;
@@ -60,10 +64,18 @@ public class ProfileHomeActivity extends AppCompatActivity {
 
         mDisplayName = findViewById(R.id.display_name);
         mProfilePhoto = findViewById(R.id.profile_photo);
+        profilemenu = findViewById(R.id.profileMenu);
+        mDisplayName = findViewById(R.id.username);
         Log.d(TAG, "onCreate: ");
 
+        mAuth = FirebaseAuth.getInstance();
+        Log.d(TAG, "onCreate: emailid: " + mAuth.getCurrentUser().getDisplayName());
+        mDisplayName.setText(mAuth.getCurrentUser().getDisplayName());
+
         achievementList = new ArrayList<>();
+        setupBottomNavigationView();
         loadAchievement();
+        setupToolbar();
 /*//Code for Streak starts here
         SharedPreferences sharedPreferences = getSharedPreferences("YOUR PREF KEY", Context.MODE_PRIVATE);
         Calendar c = Calendar.getInstance();
@@ -92,6 +104,23 @@ public class ProfileHomeActivity extends AppCompatActivity {
         int counterOfConsecutiveDays=2;
 /*        TextView streakLengthText = (TextView) findViewById(R.id.streakLengthOnProfile);
         streakLengthText.setText(counterOfConsecutiveDays);*/
+    }
+
+    private void setupToolbar(){
+
+
+
+
+
+        profilemenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: navigating to account settings");
+                Intent intent = new Intent(mContext, AccountSettingActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
 

@@ -23,6 +23,7 @@
         <activity android:name=".BookDescriptionActivity" />
         <activity android:name=".ChunkActivity" />
         <activity android:name=".Profile.ProfileHomeActivity" />
+        <activity android:name=".Profile.AccountSettingActivity"/>
     </application>
 
 </manifest>

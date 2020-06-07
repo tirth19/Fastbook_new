@@ -11,6 +11,16 @@
         android:background="@color/white"
         android:id="@+id/parentRelativeLayout">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/relLayout1">
+
+            <include layout="@layout/snippet_top_profilebar"/>
+
+        </RelativeLayout>
+
+
 
 
         <!-- **************************** Middle Section ********************** -->
@@ -19,6 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/relLayout2"
+            android:layout_below="@id/relLayout1"
             android:background="@drawable/white_grey_border_bottom">
 
             <LinearLayout
@@ -50,8 +61,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="50"
-                    android:layout_marginTop="20dp"
-                    >
+                    android:layout_marginTop="20dp">
 
                     <ImageView
                         android:layout_width="80dp"
