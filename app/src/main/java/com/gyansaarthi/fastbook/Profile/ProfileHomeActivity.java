@@ -59,7 +59,7 @@ public class ProfileHomeActivity extends AppCompatActivity {
     //firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private DatabaseReference myRef;
+    private DatabaseReference myRef, userRef;
     List<Achievement> achievementList ;
     AchievementAdapter mAchAdapter;
 
@@ -87,6 +87,26 @@ public class ProfileHomeActivity extends AppCompatActivity {
         setupBottomNavigationView();
         loadAchievement();
         setupToolbar();
+        //Getting user reference in db
+        String user = FirebaseAuth.getInstance().getUid();
+        userRef= FirebaseDatabase.getInstance().getReference("users/"+user+"/email");
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                           String emailstring = dataSnapshot.getValue(String.class);
+                Toast.makeText(ProfileHomeActivity.this, "Email is " + emailstring, Toast.LENGTH_LONG).show();
+                long numOfBooks=dataSnapshot.getChildrenCount();
+                Log.d(TAG, "Value is: " + numOfBooks);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(ProfileHomeActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
+            }
+            //creating adapter object and setting it to recyclerview
+//            ChunkAdapter adapter = new ChunkAdapter(ChunkActivity.this, chunkList);
+        };
+        userRef.addListenerForSingleValueEvent(eventListener);
+
 //Code for Streak starts here
         SharedPreferences sharedPreferences = getSharedPreferences("YOUR PREF KEY", Context.MODE_PRIVATE);
         Calendar c = Calendar.getInstance();
@@ -137,10 +157,7 @@ public class ProfileHomeActivity extends AppCompatActivity {
 
     private void loadAchievement(){
         Log.d(TAG, "loadAchievement: ");
-        achievementRef= FirebaseDatabase.getInstance().getReference("achievements/shortcut");
-        achievementList.add(new Achievement("Streak", "Reach a 7 day Streak", "3", "7", "https://i.redd.it/khk0a1wj1p151.jpg"));
-        achievementList.add(new Achievement("Books", "Read 10 books", "1", "10", "https://i.redd.it/khk0a1wj1p151.jpg"));
-        achievementList.add(new Achievement("Chunks", "Read 100 pages", "70", "100", "https://i.redd.it/khk0a1wj1p151.jpg"));
+        achievementRef= FirebaseDatabase.getInstance().getReference("achievements");
         /*        initAchievementRecyclerView();*/
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
