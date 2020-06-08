@@ -21,8 +21,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.gyansaarthi.fastbook.Home.HomeActivity;
+import com.gyansaarthi.fastbook.Objects.User;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -32,12 +36,14 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInClient signInClient;
 
     FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         googleSignIn = findViewById(R.id.btn_google_signin);
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -47,6 +53,9 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
 
         signInClient = GoogleSignIn.getClient(this, gso);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
 
 
         //check if user loggedin earlier
@@ -65,6 +74,12 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void writeNewUser(String userId, String name, String email) {
+        User user = new User(name, email);
+
+        mDatabase.child("users").child(userId).setValue(user);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -79,7 +94,15 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Toast.makeText(getApplicationContext(), "Your google account is connected to Fastbook ", Toast.LENGTH_SHORT).show();
+
+                        //if user does no exists - add him to firebase database
+                        FirebaseUser user = task.getResult().getUser();
+                        writeNewUser(user.getUid(), usernameFromEmail(user.getEmail()), user.getEmail());
+
+
+                        //check if user already exists
                         startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -91,6 +114,13 @@ public class LoginActivity extends AppCompatActivity {
             } catch (ApiException e) {
                 e.printStackTrace();
             }
+        }
+    }
+    private String usernameFromEmail(String email) {
+        if (email.contains("@")) {
+            return email.split("@")[0];
+        } else {
+            return email;
         }
     }
 }

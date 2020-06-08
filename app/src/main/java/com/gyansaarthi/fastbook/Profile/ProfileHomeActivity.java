@@ -48,6 +48,9 @@ public class ProfileHomeActivity extends AppCompatActivity {
 
     private static final String TAG = "ProfileHomeActivity";
     DatabaseReference achievementRef;
+
+
+
     private TextView mDisplayName;
     private CircleImageView mProfilePhoto;
     private Context mContext = ProfileHomeActivity.this;
