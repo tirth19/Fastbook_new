@@ -2,6 +2,7 @@ package com.gyansaarthi.fastbook.Profile;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +37,7 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 //import com.gyansaarthi.fastbook.Utils.UniversalImageLoader;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -82,7 +84,7 @@ public class ProfileHomeActivity extends AppCompatActivity {
         setupBottomNavigationView();
         loadAchievement();
         setupToolbar();
-/*//Code for Streak starts here
+//Code for Streak starts here
         SharedPreferences sharedPreferences = getSharedPreferences("YOUR PREF KEY", Context.MODE_PRIVATE);
         Calendar c = Calendar.getInstance();
 
@@ -105,11 +107,11 @@ public class ProfileHomeActivity extends AppCompatActivity {
             sharedPreferences.edit().putInt("YOUR DATE PREF KEY", thisDay);
 
             sharedPreferences.edit().putInt("YOUR COUNTER PREF KEY", 1).commit();
-        }*/
+        }
         //Code for streak ends here
-        int counterOfConsecutiveDays=2;
-/*        TextView streakLengthText = (TextView) findViewById(R.id.streakLengthOnProfile);
-        streakLengthText.setText(counterOfConsecutiveDays);*/
+
+        TextView streakLengthText = (TextView) findViewById(R.id.streakLengthOnProfile);
+        streakLengthText.setText(String.valueOf(counterOfConsecutiveDays));
     }
 
     private void setupToolbar(){

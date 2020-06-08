@@ -4,9 +4,11 @@ import android.content.Context;
 import android.graphics.text.LineBreaker;
 import android.os.Build;
 import android.text.Html;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,13 +49,15 @@ public class ChunkAdapter extends RecyclerView.Adapter<ChunkAdapter.ChunkViewHol
     }
 
     class ChunkViewHolder extends RecyclerView.ViewHolder{
-        TextView headingTextView, contentTextTextView;
+        TextView headingTextView, contentTextTextView, pageNumberTextView;
+        ProgressBar readingProgressBar;
         public ChunkViewHolder(View itemView){
             super(itemView);
             headingTextView = itemView.findViewById(R.id.titleTextView);
             contentTextTextView = itemView.findViewById(R.id.contentTextView);
+
             if (Build.VERSION.SDK_INT >= 26) {
-                contentTextTextView.setJustificationMode(LineBreaker.JUSTIFICATION_MODE_INTER_WORD);
+                contentTextTextView.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
             }
         }
 

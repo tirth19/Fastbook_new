@@ -15,7 +15,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "192306257951-svb819rrk3jtpraqidmklcq0rsjm1cra.apps.googleusercontent.com",
+          "client_id": "192306257951-v718eiadmu6k5de0bd39v5c57s8q0uo5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gyansaarthi.fastbook",
+            "certificate_hash": "5d4dc847133d99791c4d4de0d50591ab26d26334"
+          }
+        },
+        {
+          "client_id": "192306257951-34n0kaaidb9hg5d6ctjr081mm25jib0u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.gyansaarthi.fastbook",

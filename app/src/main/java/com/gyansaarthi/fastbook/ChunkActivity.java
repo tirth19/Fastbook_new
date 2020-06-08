@@ -2,6 +2,7 @@ package com.gyansaarthi.fastbook;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,10 @@ public class ChunkActivity extends AppCompatActivity {
     DatabaseReference bookRef;
     List<Chunk> chunkList ;
     ChunkAdapter mAdapter;
+    private int currentPage;
+    private LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+    protected int pastVisibleItems, visibleItemCount, totalItemCount;
+    private ProgressBar readingProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +48,15 @@ public class ChunkActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));*/
 
         chunkList = new ArrayList<>();
-       loadBook(bookTitle);
+        readingProgressBar=findViewById(R.id.readingProgress);
+        loadBook(bookTitle);
+
 //        new FetchAsyncTask(FirebaseDatabase.getInstance().getReference("books/"+bookTitle), chunkList, mAdapter, ChunkActivity.this).execute();
 //        new FetchAsyncTask(chunkList, mAdapter, this).execute();
     }
     private void loadBook(String bookTitle){
         Log.d(TAG, "loadBook: ");
         bookRef= FirebaseDatabase.getInstance().getReference("books/"+bookTitle+"/contents");
-
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -62,8 +68,12 @@ public class ChunkActivity extends AppCompatActivity {
                 }
 
                 long numOfBooks=dataSnapshot.getChildrenCount();
+                int numPage = (int)numOfBooks;
+                readingProgressBar.setMax(numPage);
                 Log.d(TAG, "Value is: " + numOfBooks);
+                //Toast.makeText(ChunkActivity.this, "Num of pages" + numOfBooks, Toast.LENGTH_LONG).show();
                 initChunkRecyclerView();
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -80,12 +90,22 @@ public class ChunkActivity extends AppCompatActivity {
         RecyclerView recyclerView=findViewById(R.id.recyclerViewChunk);
         mAdapter = new ChunkAdapter(ChunkActivity.this, chunkList);
         recyclerView.setAdapter(mAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setLayoutManager(linearLayoutManager);
         SnapHelper snapHelper=new PagerSnapHelper();
         snapHelper.attachToRecyclerView(recyclerView);
-        //creating adapter object and setting it to recyclerview
-//        ChunkAdapter adapter = new ChunkAdapter(ChunkActivity.this, chunkList);
-/*        RecyclerViewAdapter adapter= new RecyclerViewAdapter(mHeadings, mContent, this);*/
+        currentPage = 1;
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                // if you just want to know if the new "page" is completely visible
+                if(newState == RecyclerView.SCROLL_STATE_SETTLING){
+                    // if you just want to know if the new "page" comes in view
+                    currentPage= linearLayoutManager.findLastVisibleItemPosition();
+                    readingProgressBar.setProgress(currentPage+1);
+                }
+            }
+        });
 
     }
 

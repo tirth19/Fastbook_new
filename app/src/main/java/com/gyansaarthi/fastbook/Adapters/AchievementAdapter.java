@@ -46,7 +46,6 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
                 .asBitmap()
                 .load(achievement.getThumbnail())
                 .into(holder.image);
-// TODO: 03/06/20 Add settext for other attributes 
         holder.titleTextView.setText(achievement.getTitle());
         holder.targetNumbertextView.setText(achievement.getTarget());
         holder.descriptionTextView.setText(achievement.getDescription());
