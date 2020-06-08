@@ -2,6 +2,7 @@ package com.gyansaarthi.fastbook.Profile;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -71,6 +73,10 @@ public class ProfileHomeActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         Log.d(TAG, "onCreate: emailid: " + mAuth.getCurrentUser().getDisplayName());
         mDisplayName.setText(mAuth.getCurrentUser().getDisplayName());
+
+        Glide.with(this)
+                .load(Uri.parse(String.valueOf(mAuth.getCurrentUser().getPhotoUrl())))
+                .into(mProfilePhoto);
 
         achievementList = new ArrayList<>();
         setupBottomNavigationView();

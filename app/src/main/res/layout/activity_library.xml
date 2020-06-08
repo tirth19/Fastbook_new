@@ -12,4 +12,7 @@
         android:layout_height="wrap_content"
         android:text="Your Library is Coming Soon!"
         android:layout_centerInParent="true" />
+
+    <include layout="@layout/layout_bottom_navigation_view"/>
+
 </RelativeLayout>
