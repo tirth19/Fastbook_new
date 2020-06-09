@@ -108,12 +108,15 @@ public class ProfileHomeActivity extends AppCompatActivity {
         userRef.addListenerForSingleValueEvent(eventListener);
 
 //Code for Streak starts here
-        SharedPreferences sharedPreferences = getSharedPreferences("YOUR PREF KEY", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("YOUR DATE PREF KEY", Context.MODE_PRIVATE);
         Calendar c = Calendar.getInstance();
 
         int thisDay = c.get(Calendar.DAY_OF_YEAR); // GET THE CURRENT DAY OF THE YEAR
 
+
         int lastDay = sharedPreferences.getInt("YOUR DATE PREF KEY", 0); //If we don't have a saved value, use 0.
+
+        Log.d(TAG, "date : "+thisDay + "last day " + lastDay);
 
         int counterOfConsecutiveDays = sharedPreferences.getInt("YOUR COUNTER PREF KEY", 0); //If we don't have a saved value, use 0.
 

@@ -8,21 +8,48 @@
     android:id="@+id/chunkParent"
     >
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewChunk"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewChunk"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="0dp"
+            />
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"/>
-
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp" >
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        android:id="@+id/pageNavigation"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="prev"
+                android:id="@+id/prevButton"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pageNumberTextView"
+                android:text="1 of 10"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next"
+                android:id="@+id/nextButton"/>
+        </LinearLayout>
     <ProgressBar
         android:id="@+id/readingProgress"
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
-
+        android:layout_below="@id/pageNavigation"
+        android:layout_height="5dp"
+        />
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
