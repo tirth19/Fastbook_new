@@ -30,6 +30,7 @@ import com.gyansaarthi.fastbook.Adapters.AchievementAdapter;
 //import com.gyansaarthi.fastbook.Models.UserAccountSettings;
 //import com.gyansaarthi.fastbook.Models.UserSettings;
 import com.gyansaarthi.fastbook.Objects.Achievement;
+import com.gyansaarthi.fastbook.Objects.User;
 import com.gyansaarthi.fastbook.R;
 import com.gyansaarthi.fastbook.Utils.BottomNavigationViewHelper;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
@@ -59,9 +60,10 @@ public class ProfileHomeActivity extends AppCompatActivity {
     //firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private DatabaseReference myRef, userRef;
+    private DatabaseReference myRef, userRef, lastLoginRef;
     List<Achievement> achievementList ;
     AchievementAdapter mAchAdapter;
+    int lastLoginDay, streakLength;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,67 +86,62 @@ public class ProfileHomeActivity extends AppCompatActivity {
                 .into(mProfilePhoto);
 
         achievementList = new ArrayList<>();
+        lastLoginDay=5;
         setupBottomNavigationView();
-        loadAchievement();
-        setupToolbar();
+
+
+
+
         //Getting user reference in db
-        String user = FirebaseAuth.getInstance().getUid();
-        userRef= FirebaseDatabase.getInstance().getReference("users/"+user+"/email");
-        ValueEventListener eventListener = new ValueEventListener() {
+        final String user = FirebaseAuth.getInstance().getUid();
+        userRef= FirebaseDatabase.getInstance().getReference("users/"+user);
+        updateStreakAchievement(user);
+        ValueEventListener otherEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                           String emailstring = dataSnapshot.getValue(String.class);
-                Toast.makeText(ProfileHomeActivity.this, "Email is " + emailstring, Toast.LENGTH_LONG).show();
-                long numOfBooks=dataSnapshot.getChildrenCount();
-                Log.d(TAG, "Value is: " + numOfBooks);
+                lastLoginDay = dataSnapshot.child("last_login").getValue(int.class);
+                streakLength = dataSnapshot.child("streak_length").getValue(int.class);
+                setStreak(lastLoginDay, streakLength, user);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(ProfileHomeActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
             }
-            //creating adapter object and setting it to recyclerview
-//            ChunkAdapter adapter = new ChunkAdapter(ChunkActivity.this, chunkList);
+
         };
-        userRef.addListenerForSingleValueEvent(eventListener);
+        userRef.addListenerForSingleValueEvent(otherEventListener);
+        loadAchievement(user);
+        setupToolbar();
+    }
 
-//Code for Streak starts here
-        SharedPreferences sharedPreferences = getSharedPreferences("YOUR DATE PREF KEY", Context.MODE_PRIVATE);
+    private void setStreak(int lastLoginDay, int streakLength, String user){
         Calendar c = Calendar.getInstance();
+        final int thisDay = c.get(Calendar.DAY_OF_YEAR); // GET THE CURRENT DAY OF THE YEAR.
 
-        int thisDay = c.get(Calendar.DAY_OF_YEAR); // GET THE CURRENT DAY OF THE YEAR
-
-
-        int lastDay = sharedPreferences.getInt("YOUR DATE PREF KEY", 0); //If we don't have a saved value, use 0.
-
-        Log.d(TAG, "date : "+thisDay + "last day " + lastDay);
-
-        int counterOfConsecutiveDays = sharedPreferences.getInt("YOUR COUNTER PREF KEY", 0); //If we don't have a saved value, use 0.
-
-        if(lastDay == thisDay -1){
+        if(lastLoginDay == thisDay -1){
             // CONSECUTIVE DAYS
-            counterOfConsecutiveDays = counterOfConsecutiveDays + 1;
+            streakLength = streakLength + 1;
 
+            userRef=FirebaseDatabase.getInstance().getReference("users/"+user);
+            userRef.child("last_login").setValue(Calendar.getInstance().get(Calendar.DAY_OF_YEAR));
+            userRef.child("streak_length").setValue(streakLength);
 
-            sharedPreferences.edit().putInt("YOUR DATE PREF KEY", thisDay);
-
-            sharedPreferences.edit().putInt("YOUR COUNTER PREF KEY", counterOfConsecutiveDays).commit();
         } else {
 
-            sharedPreferences.edit().putInt("YOUR DATE PREF KEY", thisDay);
-
-            sharedPreferences.edit().putInt("YOUR COUNTER PREF KEY", 1).commit();
+            userRef=FirebaseDatabase.getInstance().getReference("users/"+user);
+            userRef.child("last_login").setValue(Calendar.getInstance().get(Calendar.DAY_OF_YEAR));
+            if(lastLoginDay !=thisDay){
+                streakLength =1;
+                userRef.child("streak_length").setValue(streakLength);
+            }
         }
-        //Code for streak ends here
 
         TextView streakLengthText = (TextView) findViewById(R.id.streakLengthOnProfile);
-        streakLengthText.setText(String.valueOf(counterOfConsecutiveDays));
+        streakLengthText.setText(String.valueOf(streakLength));
+
     }
 
     private void setupToolbar(){
-
-
-
-
 
         profilemenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,9 +155,9 @@ public class ProfileHomeActivity extends AppCompatActivity {
     }
 
 
-    private void loadAchievement(){
+    private void loadAchievement(String user){
         Log.d(TAG, "loadAchievement: ");
-        achievementRef= FirebaseDatabase.getInstance().getReference("achievements");
+        achievementRef= FirebaseDatabase.getInstance().getReference("users/"+user +"/achievements");
         /*        initAchievementRecyclerView();*/
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
@@ -175,8 +172,8 @@ public class ProfileHomeActivity extends AppCompatActivity {
                     ));
                 }
 
-                long numOfBooks=dataSnapshot.getChildrenCount();
-                Log.d(TAG, "Value is: " + numOfBooks);
+                long numOfAch=dataSnapshot.getChildrenCount();
+                Log.d(TAG, "No. of achievements: " + numOfAch);
                 initAchievementRecyclerView();
             }
             @Override
@@ -199,10 +196,6 @@ public class ProfileHomeActivity extends AppCompatActivity {
         menuItem.setChecked(true);
     }
 
-
-
-
-
     private void initAchievementRecyclerView(){
         Log.d(TAG, "initAchievementRecyclerView: ");
 //        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -216,6 +209,25 @@ public class ProfileHomeActivity extends AppCompatActivity {
 
     }
 
+    private void updateStreakAchievement(String user){
+        userRef=FirebaseDatabase.getInstance().getReference("users/"+user);
+        ValueEventListener otherEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                streakLength = dataSnapshot.child("streak_length").getValue(int.class);
+                Achievement streakAchievement = new Achievement("Week Streak", "Use Fastbook continuously for 7 days"
+                        , String.valueOf(streakLength), "7", "flj");
+                userRef.child("achievements").child("streak").setValue(streakAchievement);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(ProfileHomeActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
+            }
+
+        };
+        userRef.addListenerForSingleValueEvent(otherEventListener);
+
+    }
 
 //    private void setProfileWidgets(UserSettings userSettings){
 //

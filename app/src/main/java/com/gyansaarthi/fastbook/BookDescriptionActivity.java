@@ -16,11 +16,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.gyansaarthi.fastbook.Objects.BookCover;
 import com.gyansaarthi.fastbook.Utils.BottomNavigationViewHelper;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
@@ -94,12 +96,12 @@ public class BookDescriptionActivity extends AppCompatActivity {
             }
         });
 
-        final TextView author = findViewById(R.id.authorTextView);
+        final TextView authorTextView = findViewById(R.id.authorTextView);
         bookNodeRef.child("book_author").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String value = dataSnapshot.getValue(String.class);
-                author.setText(value);
+                authorTextView.setText(value);
             }
 
             @Override
@@ -124,6 +126,11 @@ public class BookDescriptionActivity extends AppCompatActivity {
         readButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Getting user reference in db
+                final String user = FirebaseAuth.getInstance().getUid();
+                DatabaseReference userRef= FirebaseDatabase.getInstance().getReference("users/"+user);
+                userRef.child("library").child(bookTitle).setValue(bookTitle);
+
                 Bundle extras = new Bundle();
                 //Adding key value pairs to this bundle
                 //there are quite a lot data types you can store in a bundle
@@ -131,6 +138,7 @@ public class BookDescriptionActivity extends AppCompatActivity {
                 Intent chunkIntent = new Intent(getApplicationContext(), ChunkActivity.class);
                 chunkIntent.putExtras(extras);
                 startActivity(chunkIntent);
+
             }
         });
     }

@@ -24,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.gyansaarthi.fastbook.Adapters.RecyclerViewAdapter;
 import com.gyansaarthi.fastbook.BookDescriptionActivity;
 //import com.gyansaarthi.fastbook.Login.LoginActivity;
+import com.gyansaarthi.fastbook.Objects.BookCover;
 import com.gyansaarthi.fastbook.R;
 import com.gyansaarthi.fastbook.Utils.BottomNavigationViewHelper;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
@@ -155,6 +156,7 @@ public class HomeActivity extends AppCompatActivity {
         //Adding key value pairs to this bundle
         //there are quite a lot data types you can store in a bundle
         extras.putString("BOOK_NAME","lettersfromaselfmademerchant");
+        extras.putStringArrayList("BOOK_COVER", mAuthor);
         Intent intent = new Intent(this, BookDescriptionActivity.class);
         intent.putExtras(extras);
         this.startActivity(intent);
