@@ -65,8 +65,8 @@ public class HomeActivity extends AppCompatActivity {
         bookCoverList = new ArrayList<>();
         bookCoverList2 = new ArrayList<>();
 
-        RecyclerView hindirecycler = findViewById(R.id.recycler_view2);
-
+        loadingProgressBar=findViewById(R.id.loadingPanel);
+        loadingProgressBar.setVisibility(View.VISIBLE);
  //       initCollection("homepage", mainrecycler);
         new DownloadFilesTask().execute("homepage");
         new DownloadFilesTask2().execute("hinditop10");
@@ -81,8 +81,7 @@ public class HomeActivity extends AppCompatActivity {
     private class DownloadFilesTask extends AsyncTask<String, Integer, Long> {
 
         protected void onPreExecute(){
-            loadingProgressBar=findViewById(R.id.loadingPanel);
-            loadingProgressBar.setVisibility(View.VISIBLE);
+
 
             Toast.makeText(getApplicationContext(), "Loading 1st recycler", Toast.LENGTH_SHORT).show();
         }
