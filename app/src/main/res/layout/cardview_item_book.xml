@@ -6,7 +6,7 @@
     android:id="@+id/parent_id">
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="235dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
                 <ImageView
                     android:layout_width="150dp"
@@ -14,8 +14,7 @@
                     android:scaleType="centerCrop"
                     android:id="@+id/thumbnail"
                     android:src="@drawable/hindi_collection"
-                    android:background="@drawable/round_image"
-                    />
+                    android:background="@drawable/round_image"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -23,10 +22,11 @@
                     android:textAlignment="center"
                     android:text="preview"
                     android:gravity="center"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     android:id="@+id/author"
                     android:maxLines="2"
-                    android:textColor="#2d2d2d"/>
+                    android:textColor="#2d2d2d"
+                    android:paddingBottom="20dp"/>
         </LinearLayout>
 </RelativeLayout>
 

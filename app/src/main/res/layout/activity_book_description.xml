@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BookDescriptionActivity"
-    android:orientation="vertical">
+    tools:context=".BookDescriptionActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <ImageView
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:id="@+id/bookcoverImageView"
-        android:paddingTop="10dp"
+        android:layout_marginTop="40dp"
         android:outlineAmbientShadowColor="@color/colorAccent"
         android:background="@drawable/round_image">
     </ImageView>
@@ -22,6 +25,7 @@
         android:id="@+id/bookTitleTextView"
         android:textColor="#000000"
         android:gravity="center"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:text="Book Title" />
 
@@ -33,6 +37,7 @@
         android:textColor="#878383"
         android:gravity="center"
         android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
         android:text="Book Title" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -42,6 +47,7 @@
         android:id="@+id/readNowButton"
         android:text="Read Now"
         android:textColor="#FFFFFF"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/button_background" />
 
     <TextView
@@ -62,5 +68,7 @@
         android:paddingRight="10dp"
         android:textColor="#000000" />
 
+    </LinearLayout>
 
-</LinearLayout>
+
+</ScrollView>
