@@ -9,6 +9,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/relLayout1">
+
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -29,7 +38,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="190dp"
                         app:cardCornerRadius="30dp"
-                        app:cardBackgroundColor="@color/cardBackground"
+                        app:cardBackgroundColor="#03A9F4"
                         android:id="@+id/todayscard">
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -46,7 +55,6 @@
                                     android:text="Recommended"
                                     android:textSize="30dp"
                                     android:padding="15dp"
-                                    android:textColor="@color/blue"
                                     android:id="@+id/todaysbook">
                                 </TextView>
                                 <TextView
@@ -59,16 +67,14 @@
                                     android:layout_gravity="center"
                                     android:layout_toRightOf="@+id/todaysbook" />
                             </LinearLayout>
-
                             <ImageView
-                                android:id="@+id/todaysImageView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="150dp"
-                                android:layout_marginLeft="0dp"
-                                android:layout_toRightOf="@id/left_text_view"
+                                android:id="@+id/todaysImageView"
+                                android:src="@drawable/todays_book"
                                 android:gravity="center_vertical"
                                 android:paddingTop="20dp"
-                                android:src="@drawable/todays_book" />
+                                android:layout_toRightOf="@id/left_text_view"/>
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
                     <TextView
@@ -79,7 +85,7 @@
                         android:id="@+id/heading"
                         android:text="Explore all"
                         android:textStyle="bold"
-                        android:textSize="20dp"
+                        android:textSize="30dp"
                         android:layout_gravity="center"/>
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
@@ -90,12 +96,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/recycler_view"
+                        android:padding="10dp"
                         android:id="@+id/heading2"
                         android:text="Top books in Hindi"
                         android:textStyle="bold"
-                        android:padding="10dp"
-
-                        android:textSize="20dp"
+                        android:textSize="30dp"
                         android:layout_gravity="center"/>
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"

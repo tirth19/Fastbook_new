@@ -49,8 +49,7 @@ public class ChunkAdapter extends RecyclerView.Adapter<ChunkAdapter.ChunkViewHol
     }
 
     class ChunkViewHolder extends RecyclerView.ViewHolder{
-        TextView headingTextView, contentTextTextView, pageNumberTextView;
-        ProgressBar readingProgressBar;
+        TextView headingTextView, contentTextTextView;
         public ChunkViewHolder(View itemView){
             super(itemView);
             headingTextView = itemView.findViewById(R.id.titleTextView);

@@ -17,14 +17,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.gyansaarthi.fastbook.Adapters.RecyclerViewAdapter;
+import com.gyansaarthi.fastbook.Adapters.BookCoverAdapter;
 import com.gyansaarthi.fastbook.BookDescriptionActivity;
 //import com.gyansaarthi.fastbook.Login.LoginActivity;
 import com.gyansaarthi.fastbook.Objects.BookCover;
@@ -33,6 +31,7 @@ import com.gyansaarthi.fastbook.Utils.BottomNavigationViewHelper;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -43,7 +42,9 @@ public class HomeActivity extends AppCompatActivity {
     private ArrayList<String> mImageUrls = new ArrayList<>();
     private ArrayList<String> mBookName = new ArrayList<>();
 
-    RecyclerViewAdapter mAdapter;
+    List<BookCover> bookCoverList, bookCoverList2 ;
+
+    BookCoverAdapter newAdapter;
     DatabaseReference homepageRef;
 
     private Context mContext = HomeActivity.this;
@@ -58,10 +59,11 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Log.d(TAG, "onCreate: starting.. ");
+        bookCoverList = new ArrayList<>();
+        bookCoverList2 = new ArrayList<>();
 
         RecyclerView mainrecycler = findViewById(R.id.recycler_view);
         RecyclerView hindirecycler = findViewById(R.id.recycler_view2);
-
 
         initCollection("homepage", mainrecycler);
         initCollection2("hinditop10", hindirecycler);
@@ -83,18 +85,17 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String author = ds.child("author").getValue(String.class);
-                    mAuthor.add(author);
-                    String title = ds.child("title").getValue(String.class);
-                    mBookName.add(title);
-                    String thumbnail = ds.child("thumbnail").getValue(String.class);
-                    mImageUrls.add(thumbnail);
-                    Log.d("TAG", author + title);
+                    bookCoverList.add(new BookCover(
+                            ds.child("title").getValue(String.class),
+                            ds.child("author").getValue(String.class),
+                            ds.child("thumbnail").getValue(String.class),
+                            10, 0
+                    ));
                 }
 
                 long numOfBooks=dataSnapshot.getChildrenCount();
                 Log.d(TAG, "Value is: " + numOfBooks);
-                initRecyclerView(rview);
+                initRecyclerView(rview, bookCoverList);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -112,18 +113,17 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String author = ds.child("author").getValue(String.class);
-                    mAuthor.add(author);
-                    String title = ds.child("title").getValue(String.class);
-                    mBookName.add(title);
-                    String thumbnail = ds.child("thumbnail").getValue(String.class);
-                    mImageUrls.add(thumbnail);
-                    Log.d("TAG", author + title);
+                    bookCoverList2.add(new BookCover(
+                            ds.child("title").getValue(String.class),
+                            ds.child("author").getValue(String.class),
+                            ds.child("thumbnail").getValue(String.class),
+                            10, 0
+                    ));
                 }
 
                 long numOfBooks=dataSnapshot.getChildrenCount();
                 Log.d(TAG, "Value is: " + numOfBooks);
-                initRecyclerView2(rview2);
+                initRecyclerView(rview2, bookCoverList2);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -136,23 +136,16 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    private void initRecyclerView(RecyclerView rview){
+    private void initRecyclerView(RecyclerView rview, List<BookCover> bookCovers){
         Log.d(TAG, "initRecyclerView: init recyclerview.");
 //        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        mAdapter = new RecyclerViewAdapter(HomeActivity.this, mAuthor, mImageUrls, mBookName);
-        rview.setAdapter(mAdapter);
+//        mAdapter = new RecyclerViewAdapter(HomeActivity.this, mAuthor, mImageUrls, mBookName);
+        newAdapter = new BookCoverAdapter(HomeActivity.this, bookCovers);
+        rview.setAdapter(newAdapter);
 //        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         rview.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
     }
 
-    private void initRecyclerView2(RecyclerView rview){
-        Log.d(TAG, "initRecyclerView: init recyclerview.");
-//        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        mAdapter = new RecyclerViewAdapter(HomeActivity.this, mAuthor, mImageUrls, mBookName);
-        rview.setAdapter(mAdapter);
-//        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        rview.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-    }
     private void initFeaturedbook(){
         Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
         homepageRef= FirebaseDatabase.getInstance().getReference("collections/featured_books");
