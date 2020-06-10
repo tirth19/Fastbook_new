@@ -8,7 +8,6 @@ public class User {
     public String email;
     public List<Achievement> achievementList;
     public int last_login, streak_length;
-    //TODO: Add book object and add read booklist to the user
 
     public User(String username, String email) {
         this.username = username;
