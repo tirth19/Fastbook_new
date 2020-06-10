@@ -39,7 +39,6 @@
                         android:layout_height="190dp"
                         app:cardCornerRadius="30dp"
                         app:cardBackgroundColor="#03A9F4"
-                        android:onClick="todaysbook"
                         android:id="@+id/todayscard">
                         <RelativeLayout
                             android:layout_width="match_parent"
