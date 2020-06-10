@@ -39,7 +39,6 @@
                         android:layout_height="190dp"
                         app:cardCornerRadius="30dp"
                         app:cardBackgroundColor="#03A9F4"
-                        android:onClick="todaysbook"
                         android:id="@+id/todayscard">
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -86,7 +85,7 @@
                         android:id="@+id/heading"
                         android:text="Explore all"
                         android:textStyle="bold"
-                        android:textSize="20dp"
+                        android:textSize="30dp"
                         android:layout_gravity="center"/>
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
@@ -101,7 +100,7 @@
                         android:id="@+id/heading2"
                         android:text="Top books in Hindi"
                         android:textStyle="bold"
-                        android:textSize="20dp"
+                        android:textSize="30dp"
                         android:layout_gravity="center"/>
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"

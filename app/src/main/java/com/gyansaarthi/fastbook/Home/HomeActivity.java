@@ -7,13 +7,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -44,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
     DatabaseReference homepageRef;
 
     private Context mContext = HomeActivity.this;
+    String featuredBook;
 
 //    //firebase
 //    private FirebaseAuth mAuth;
@@ -61,6 +65,8 @@ public class HomeActivity extends AppCompatActivity {
 
         initCollection("homepage", mainrecycler);
         initCollection2("hinditop10", hindirecycler);
+        featuredBook="12rulesforlife";
+        initFeaturedbook();
 
 //        setupFireBaseAuth();
 //        initImageLoader();
@@ -71,7 +77,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void initCollection(String collectionname, final RecyclerView rview){
         Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
-        homepageRef= FirebaseDatabase.getInstance().getReference("collections/"+ collectionname);
+        homepageRef= FirebaseDatabase.getInstance().getReference("collections");
 
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
@@ -97,12 +103,11 @@ public class HomeActivity extends AppCompatActivity {
             //creating adapter object and setting it to recyclerview
 //            BookAdapter adapter = new BookAdapter(MainActivity.this, bookList);
         };
-        homepageRef.addListenerForSingleValueEvent(eventListener);
+        homepageRef.child(collectionname).addListenerForSingleValueEvent(eventListener);
     }
     private void initCollection2(String collectionname, final RecyclerView rview2){
         Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
-        homepageRef= FirebaseDatabase.getInstance().getReference("collections/"+ collectionname);
-
+        homepageRef= FirebaseDatabase.getInstance().getReference("collections");
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -127,7 +132,7 @@ public class HomeActivity extends AppCompatActivity {
             //creating adapter object and setting it to recyclerview
 //            BookAdapter adapter = new BookAdapter(MainActivity.this, bookList);
         };
-        homepageRef.addListenerForSingleValueEvent(eventListener);
+        homepageRef.child(collectionname).addListenerForSingleValueEvent(eventListener);
     }
 
 
@@ -148,20 +153,54 @@ public class HomeActivity extends AppCompatActivity {
 //        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         rview.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
     }
+    private void initFeaturedbook(){
+        Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
+        homepageRef= FirebaseDatabase.getInstance().getReference("collections/featured_books");
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    final String featuredBook1 = dataSnapshot.getValue(String.class);
+                DatabaseReference bookRef = FirebaseDatabase.getInstance().getReference("books/"+featuredBook1);
+                ValueEventListener otherEventListener = new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String thumbnail = dataSnapshot.child("thumbnail").getValue(String.class);
+                        ImageView todaysImageView=findViewById(R.id.todaysImageView);
+                        Glide.with(mContext)
+                                .asBitmap()
+                                .load(thumbnail)
+                                .into(todaysImageView);
+                        CardView todaysCardView = findViewById(R.id.todayscard);
+                        todaysCardView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //create a Bundle object
+                                Bundle extras = new Bundle();
+                                //Adding key value pairs to this bundle
+                                //there are quite a lot data types you can store in a bundle
+                                extras.putString("BOOK_NAME",featuredBook1);
+                                Intent intent = new Intent(mContext, BookDescriptionActivity.class);
+                                intent.putExtras(extras);
+                                mContext.startActivity(intent);
+                            }
+                        });
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(HomeActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
+                    }
+                };
+                bookRef.addListenerForSingleValueEvent(otherEventListener);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(HomeActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
+            }
+        };
+        homepageRef.addListenerForSingleValueEvent(eventListener);
 
-
-    public void todaysbook(View view)
-    {
-        //create a Bundle object
-        Bundle extras = new Bundle();
-        //Adding key value pairs to this bundle
-        //there are quite a lot data types you can store in a bundle
-        extras.putString("BOOK_NAME","lettersfromaselfmademerchant");
-        extras.putStringArrayList("BOOK_COVER", mAuthor);
-        Intent intent = new Intent(this, BookDescriptionActivity.class);
-        intent.putExtras(extras);
-        this.startActivity(intent);
     }
+
 
     private void initImageLoader(){
 //        UniversalImageLoader universalImageLoader = new UniversalImageLoader(mContext);
