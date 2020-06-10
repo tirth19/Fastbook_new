@@ -2,12 +2,14 @@ package com.gyansaarthi.fastbook.Home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -46,6 +48,7 @@ public class HomeActivity extends AppCompatActivity {
 
     BookCoverAdapter newAdapter;
     DatabaseReference homepageRef;
+    ProgressBar loadingProgressBar;
 
     private Context mContext = HomeActivity.this;
     String featuredBook;
@@ -62,12 +65,11 @@ public class HomeActivity extends AppCompatActivity {
         bookCoverList = new ArrayList<>();
         bookCoverList2 = new ArrayList<>();
 
-        RecyclerView mainrecycler = findViewById(R.id.recycler_view);
         RecyclerView hindirecycler = findViewById(R.id.recycler_view2);
 
-        initCollection("homepage", mainrecycler);
-        initCollection2("hinditop10", hindirecycler);
-        featuredBook="12rulesforlife";
+ //       initCollection("homepage", mainrecycler);
+        new DownloadFilesTask().execute("homepage");
+        new DownloadFilesTask2().execute("hinditop10");
         initFeaturedbook();
 
 //        setupFireBaseAuth();
@@ -76,65 +78,100 @@ public class HomeActivity extends AppCompatActivity {
 //        setupViewPager();
 
     }
+    private class DownloadFilesTask extends AsyncTask<String, Integer, Long> {
 
-    private void initCollection(String collectionname, final RecyclerView rview){
-        Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
-        homepageRef= FirebaseDatabase.getInstance().getReference("collections");
+        protected void onPreExecute(){
+            loadingProgressBar=findViewById(R.id.loadingPanel);
+            loadingProgressBar.setVisibility(View.VISIBLE);
 
-        ValueEventListener eventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    bookCoverList.add(new BookCover(
-                            ds.child("title").getValue(String.class),
-                            ds.child("author").getValue(String.class),
-                            ds.child("thumbnail").getValue(String.class),
-                            10, 0
-                    ));
+            Toast.makeText(getApplicationContext(), "Loading 1st recycler", Toast.LENGTH_SHORT).show();
+        }
+        @Override
+        protected Long doInBackground(String... strings) {
+            Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
+            homepageRef= FirebaseDatabase.getInstance().getReference("collections");
+
+            ValueEventListener eventListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                        bookCoverList.add(new BookCover(
+                                ds.child("title").getValue(String.class),
+                                ds.child("author").getValue(String.class),
+                                ds.child("thumbnail").getValue(String.class),
+                                10, 0
+                        ));
+                    }
+
+                    long numOfBooks=dataSnapshot.getChildrenCount();
+                    Log.d(TAG, "Value is: " + numOfBooks);
+                    RecyclerView mainRecycler = findViewById(R.id.recycler_view);
+                    RecyclerView hindiRecycler = findViewById(R.id.recycler_view2);
+                    initRecyclerView(mainRecycler, bookCoverList);
                 }
-
-                long numOfBooks=dataSnapshot.getChildrenCount();
-                Log.d(TAG, "Value is: " + numOfBooks);
-                initRecyclerView(rview, bookCoverList);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(HomeActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
-            }
-            //creating adapter object and setting it to recyclerview
-//            BookAdapter adapter = new BookAdapter(MainActivity.this, bookList);
-        };
-        homepageRef.child(collectionname).addListenerForSingleValueEvent(eventListener);
-    }
-    private void initCollection2(String collectionname, final RecyclerView rview2){
-        Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
-        homepageRef= FirebaseDatabase.getInstance().getReference("collections");
-        ValueEventListener eventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    bookCoverList2.add(new BookCover(
-                            ds.child("title").getValue(String.class),
-                            ds.child("author").getValue(String.class),
-                            ds.child("thumbnail").getValue(String.class),
-                            10, 0
-                    ));
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(HomeActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
                 }
-
-                long numOfBooks=dataSnapshot.getChildrenCount();
-                Log.d(TAG, "Value is: " + numOfBooks);
-                initRecyclerView(rview2, bookCoverList2);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(HomeActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
-            }
-            //creating adapter object and setting it to recyclerview
+                //creating adapter object and setting it to recyclerview
 //            BookAdapter adapter = new BookAdapter(MainActivity.this, bookList);
-        };
-        homepageRef.child(collectionname).addListenerForSingleValueEvent(eventListener);
+            };
+            homepageRef.child(strings[0]).addListenerForSingleValueEvent(eventListener);
+            return null;
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+        }
+        protected void onPostExecute(Long result) {
+            findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+        }
     }
 
+    private class DownloadFilesTask2 extends AsyncTask<String, Integer, Long> {
+
+        protected void onPreExecute(){
+
+            Toast.makeText(getApplicationContext(), "Loading 1st recycler", Toast.LENGTH_SHORT).show();
+        }
+        @Override
+        protected Long doInBackground(String... strings) {
+            Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
+            homepageRef= FirebaseDatabase.getInstance().getReference("collections");
+
+            ValueEventListener eventListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                        bookCoverList2.add(new BookCover(
+                                ds.child("title").getValue(String.class),
+                                ds.child("author").getValue(String.class),
+                                ds.child("thumbnail").getValue(String.class),
+                                10, 0
+                        ));
+                    }
+
+                    long numOfBooks=dataSnapshot.getChildrenCount();
+                    Log.d(TAG, "Value is: " + numOfBooks);
+                    RecyclerView hindiRecycler = findViewById(R.id.recycler_view2);
+                    initRecyclerView(hindiRecycler, bookCoverList2);
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(HomeActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
+                }
+                //creating adapter object and setting it to recyclerview
+//            BookAdapter adapter = new BookAdapter(MainActivity.this, bookList);
+            };
+            homepageRef.child(strings[0]).addListenerForSingleValueEvent(eventListener);
+            return null;
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+        }
+        protected void onPostExecute(Long result) {
+//            findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+        }
+    }
 
     private void initRecyclerView(RecyclerView rview, List<BookCover> bookCovers){
         Log.d(TAG, "initRecyclerView: init recyclerview.");

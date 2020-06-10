@@ -91,7 +91,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/heading"
-                        android:id="@+id/recycler_view"/>
+                        android:id="@+id/recycler_view"
+                        />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -107,6 +108,12 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/heading2"
                         android:id="@+id/recycler_view2"/>
+                    <ProgressBar
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/loadingPanel"
+                        android:indeterminate="true"
+                        android:layout_below="@id/heading"/>
 
                 </RelativeLayout>
             </ScrollView>
@@ -118,3 +125,4 @@
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
