@@ -183,7 +183,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initFeaturedbook(){
-        Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
+        Log.d(TAG, "initBitmaps: preparing bitmaps.");
         homepageRef= FirebaseDatabase.getInstance().getReference("collections/featured_books");
         ValueEventListener eventListener = new ValueEventListener() {
             @Override

@@ -12,9 +12,10 @@
             android:layout_width="0dp"
             android:layout_height="120dp"
             android:scaleType="centerCrop"
-            android:id="@+id/thumbnail"
+            android:id="@+id/achievementThumbnail"
             android:src="@drawable/hindi_collection"
-            android:layout_weight="30"/>
+            android:layout_weight="30"
+            android:background="@drawable/round_image"/>
         <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"

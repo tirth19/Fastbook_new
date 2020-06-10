@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#FBFBFB</color>
-    <color name="colorPrimaryDark">#FBFBFB</color>
+    <color name="colorPrimaryDark">#86878A</color>
     <color name="colorAccent">#94B5DD</color>
     <color name="grey">#bfbfbf</color>
     <color name="white">#fff</color>
     <color name="black">#000</color>
-    <color name="blue">#3385ff</color>
+    <color name="blue">#0950CA</color>
     <color name="cardBackground">#BBDEFB</color>
 </resources>

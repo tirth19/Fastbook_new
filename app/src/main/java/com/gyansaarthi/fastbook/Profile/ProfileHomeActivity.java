@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,7 +57,7 @@ public class ProfileHomeActivity extends AppCompatActivity {
     private TextView mDisplayName;
     private CircleImageView mProfilePhoto;
     private Context mContext = ProfileHomeActivity.this;
-    private ImageView profilemenu;
+    private ImageView profilemenu, thumbnail;
 
     //firebase
     private FirebaseAuth mAuth;
@@ -65,6 +67,7 @@ public class ProfileHomeActivity extends AppCompatActivity {
     AchievementAdapter mAchAdapter;
     int lastLoginDay, streakLength;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +78,7 @@ public class ProfileHomeActivity extends AppCompatActivity {
         mProfilePhoto = findViewById(R.id.profile_photo);
         profilemenu = findViewById(R.id.profileMenu);
         mDisplayName = findViewById(R.id.username);
+
         Log.d(TAG, "onCreate: ");
 
         mAuth = FirebaseAuth.getInstance();
@@ -215,7 +219,7 @@ public class ProfileHomeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 streakLength = dataSnapshot.child("streak_length").getValue(int.class);
                 Achievement streakAchievement = new Achievement("Week Streak", "Use Fastbook continuously for 7 days"
-                        , String.valueOf(streakLength), "7", "flj");
+                        , String.valueOf(streakLength), "7", "https://i.imgur.com/NgRtLd2.jpg");
                 userRef.child("achievements").child("streak").setValue(streakAchievement);
             }
             @Override

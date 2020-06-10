@@ -70,7 +70,7 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         public AchievementViewHolder(View itemView) {
             super(itemView);
-            image = itemView.findViewById(R.id.thumbnail);
+            image = itemView.findViewById(R.id.achievementThumbnail);
             titleTextView = itemView.findViewById(R.id.achievement_title);
             descriptionTextView = itemView.findViewById(R.id.achievement_description);
             targetNumbertextView = itemView.findViewById(R.id.achievement_target_number);
