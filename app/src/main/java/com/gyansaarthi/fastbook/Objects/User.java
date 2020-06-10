@@ -18,7 +18,6 @@ public class User {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-
     public User(String username, String email, List<Achievement> achievementList, int lastLogin, int streakLength) {
         this.username = username;
         this.email = email;

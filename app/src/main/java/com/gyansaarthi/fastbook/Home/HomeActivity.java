@@ -17,19 +17,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.gyansaarthi.fastbook.Adapters.BookCoverAdapter;
-import com.gyansaarthi.fastbook.Adapters.RecyclerViewAdapter;
 import com.gyansaarthi.fastbook.BookDescriptionActivity;
 //import com.gyansaarthi.fastbook.Login.LoginActivity;
 import com.gyansaarthi.fastbook.Objects.BookCover;
-import com.gyansaarthi.fastbook.Objects.Chunk;
 import com.gyansaarthi.fastbook.R;
 import com.gyansaarthi.fastbook.Utils.BottomNavigationViewHelper;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
@@ -48,7 +44,6 @@ public class HomeActivity extends AppCompatActivity {
 
     List<BookCover> bookCoverList, bookCoverList2 ;
 
-    RecyclerViewAdapter mAdapter;
     BookCoverAdapter newAdapter;
     DatabaseReference homepageRef;
 
@@ -69,7 +64,6 @@ public class HomeActivity extends AppCompatActivity {
 
         RecyclerView mainrecycler = findViewById(R.id.recycler_view);
         RecyclerView hindirecycler = findViewById(R.id.recycler_view2);
-
 
         initCollection("homepage", mainrecycler);
         initCollection2("hinditop10", hindirecycler);
