@@ -2,11 +2,14 @@ package com.gyansaarthi.fastbook;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -34,15 +37,19 @@ public class LoginActivity extends AppCompatActivity {
     SignInButton googleSignIn;
     GoogleSignInOptions gso;
     GoogleSignInClient signInClient;
+    ImageView logo;
 
     FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         googleSignIn = findViewById(R.id.btn_google_signin);
+        logo = findViewById(R.id.logo);
+        logo.setClipToOutline(true);
 
 
         mAuth = FirebaseAuth.getInstance();

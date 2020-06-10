@@ -58,6 +58,7 @@ public class HomeActivity extends AppCompatActivity {
         RecyclerView mainrecycler = findViewById(R.id.recycler_view);
         RecyclerView hindirecycler = findViewById(R.id.recycler_view2);
 
+
         initCollection("homepage", mainrecycler);
         initCollection2("hinditop10", hindirecycler);
 

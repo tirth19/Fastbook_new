@@ -2,6 +2,7 @@ package com.gyansaarthi.fastbook;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -34,6 +36,7 @@ public class BookDescriptionActivity extends AppCompatActivity {
     private static final int ACTIVITY_NUM = 1;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +85,8 @@ public class BookDescriptionActivity extends AppCompatActivity {
         });
 
         final ImageView bookCover = findViewById(R.id.bookcoverImageView);
+        bookCover.setClipToOutline(true);
+
         bookNodeRef.child("thumbnail").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

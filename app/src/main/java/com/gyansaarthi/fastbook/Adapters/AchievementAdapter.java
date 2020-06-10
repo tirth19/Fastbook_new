@@ -1,6 +1,7 @@
 package com.gyansaarthi.fastbook.Adapters;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -65,6 +67,7 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
        ProgressBar simpleProgressBar;
         RelativeLayout parentLayout;
 
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         public AchievementViewHolder(View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.thumbnail);
@@ -72,6 +75,9 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
             descriptionTextView = itemView.findViewById(R.id.achievement_description);
             targetNumbertextView = itemView.findViewById(R.id.achievement_target_number);
             simpleProgressBar=itemView.findViewById(R.id.simpleProgressBar); // initiate the progress bar
+
+            image.setClipToOutline(true);
+
         }
     }
 }

@@ -15,7 +15,7 @@
         android:src="@drawable/fastbook_logo"
         android:layout_centerHorizontal="true"
         android:id="@+id/logo"
-        />
+        android:background="@drawable/round_image"/>
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/btn_google_signin"

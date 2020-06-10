@@ -2,6 +2,7 @@ package com.gyansaarthi.fastbook.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -90,11 +92,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView imageName;
         RelativeLayout parentLayout;
 
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         public ViewHolder(View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.thumbnail);
+            image.setClipToOutline(true);
+
             imageName = itemView.findViewById(R.id.author);
             parentLayout = itemView.findViewById(R.id.parent_id);
+
         }
     }
 }

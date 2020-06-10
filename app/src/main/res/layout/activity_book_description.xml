@@ -12,7 +12,7 @@
         android:id="@+id/bookcoverImageView"
         android:paddingTop="10dp"
         android:outlineAmbientShadowColor="@color/colorAccent"
-        >
+        android:background="@drawable/round_image">
     </ImageView>
 
     <androidx.appcompat.widget.AppCompatTextView

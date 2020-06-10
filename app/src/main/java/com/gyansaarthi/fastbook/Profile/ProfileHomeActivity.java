@@ -86,7 +86,6 @@ public class ProfileHomeActivity extends AppCompatActivity {
                 .into(mProfilePhoto);
 
         achievementList = new ArrayList<>();
-        lastLoginDay=5;
         setupBottomNavigationView();
 
 

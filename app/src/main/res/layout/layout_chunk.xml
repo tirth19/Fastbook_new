@@ -7,10 +7,10 @@
     app:cardMaxElevation="2dp"
     app:cardElevation="1dp"
     android:layout_centerInParent="true"-->
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="400dp"
         android:layout_height="wrap_content"
-        >
+        android:fillViewport="true">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -37,5 +37,5 @@
                 android:layout_below="@id/titleTextView"
                 android:layout_centerHorizontal="true"/>
         </RelativeLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </androidx.cardview.widget.CardView>
