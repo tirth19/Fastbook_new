@@ -71,7 +71,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="150dp"
                                 android:id="@+id/todaysImageView"
-                                android:src="@drawable/todays_book"
                                 android:gravity="center_vertical"
                                 android:paddingTop="20dp"
                                 android:layout_toRightOf="@id/left_text_view"/>

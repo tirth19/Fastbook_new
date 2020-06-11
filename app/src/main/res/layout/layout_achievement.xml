@@ -51,6 +51,8 @@
                     android:progress="3"
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:id="@+id/simpleProgressBar"
+                    android:progressTint="@color/blue"
+                    android:progressBackgroundTint="@color/grey"
                     android:layout_weight="85"/>
                 <TextView
                     android:layout_width="0dp"

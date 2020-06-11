@@ -8,14 +8,14 @@
     android:id="@+id/chunkParent"
     >
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewChunk"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="0dp"
-            />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewChunk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,29 +27,40 @@
         android:id="@+id/pageNavigation"
             android:layout_centerHorizontal="true"
             android:orientation="horizontal">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="prev"
-                android:id="@+id/prevButton"/>
+<!--            <Button-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="prev"-->
+<!--                android:id="@+id/prevButton"/>-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/prevButton"
+            android:src="@drawable/ic_previous"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/pageNumberTextView"
                 android:text="1 of 10"
                 />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Next"
-                android:id="@+id/nextButton"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nextButton"
+            android:src="@drawable/ic_next"/>
+<!--            <Button-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Next"-->
+<!--                android:id="@+id/nextButton"/>-->
         </LinearLayout>
     <ProgressBar
         android:id="@+id/readingProgress"
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_below="@id/pageNavigation"
-        android:layout_height="5dp"
-        />
+        android:progressTint="@color/blue"
+        android:progressBackgroundTint="@color/white"
+        android:layout_height="5dp" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

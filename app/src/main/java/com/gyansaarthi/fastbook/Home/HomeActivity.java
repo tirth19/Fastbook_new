@@ -83,7 +83,7 @@ public class HomeActivity extends AppCompatActivity {
         protected void onPreExecute(){
 
 
-            Toast.makeText(getApplicationContext(), "Loading 1st recycler", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "Loading 1st recycler", Toast.LENGTH_SHORT).show();
         }
         @Override
         protected Long doInBackground(String... strings) {
@@ -130,7 +130,7 @@ public class HomeActivity extends AppCompatActivity {
 
         protected void onPreExecute(){
 
-            Toast.makeText(getApplicationContext(), "Loading 1st recycler", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "Loading 1st recycler", Toast.LENGTH_SHORT).show();
         }
         @Override
         protected Long doInBackground(String... strings) {

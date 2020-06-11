@@ -7,7 +7,7 @@
         android:allowBackup="true"
         android:icon="@drawable/fastbook_logo"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/fastbook_logo"
+        android:roundIcon="@drawable/fastbook_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".LibraryActivity"></activity>

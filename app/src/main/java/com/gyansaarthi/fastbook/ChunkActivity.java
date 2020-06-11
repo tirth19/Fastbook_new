@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -120,8 +121,8 @@ public class ChunkActivity extends AppCompatActivity {
             }
         });
 
-        Button prevButton = findViewById(R.id.prevButton);
-        Button nextButton = findViewById(R.id.nextButton);
+        ImageView prevButton = findViewById(R.id.prevButton);
+        ImageView nextButton = findViewById(R.id.nextButton);
 
         final RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(this) {
             @Override protected int getVerticalSnapPreference() {
