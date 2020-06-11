@@ -15,7 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "192306257951-v718eiadmu6k5de0bd39v5c57s8q0uo5.apps.googleusercontent.com",
+          "client_id": "192306257951-08teud3jp04je1odp0urv3jvo1v60trk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.gyansaarthi.fastbook",
@@ -23,10 +23,47 @@
           }
         },
         {
-          "client_id": "192306257951-34n0kaaidb9hg5d6ctjr081mm25jib0u.apps.googleusercontent.com",
+          "client_id": "192306257951-d3aish8udu2jjgio36htrurei5lic2ps.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.gyansaarthi.fastbook",
+            "certificate_hash": "e0be6cd7772cb27935c8f4709d5b6e3def2f01c4"
+          }
+        },
+        {
+          "client_id": "192306257951-45p9l82ivn9n3b8i40nvq1t3bj6uvjoq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCriTdUm-Cu-75sUY05B9gBuybEp26kPBk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "192306257951-kiuuf6cls7vk7akk3u32aoaov25tjous.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192306257951:android:007018522bb8eb8a94752a",
+        "android_client_info": {
+          "package_name": "com.gyansaarthi.fastbookReader"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "192306257951-ui114rebt6i0uk825g7fv5g3754cu3l3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gyansaarthi.fastbookReader",
             "certificate_hash": "e0be6cd7772cb27935c8f4709d5b6e3def2f01c4"
           }
         },

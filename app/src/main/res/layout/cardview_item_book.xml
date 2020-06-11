@@ -9,13 +9,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
                 <ImageView
-                    android:layout_width="150dp"
-                    android:layout_height="195dp"
+                    android:layout_width="140dp"
+                    android:layout_height="210dp"
                     android:scaleType="centerCrop"
                     android:id="@+id/thumbnail"
                     android:src="@drawable/hindi_collection"
                     android:background="@drawable/round_image"/>
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -17,11 +17,11 @@
             android:layout_weight="30"
             android:background="@drawable/round_image"/>
         <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="70"
-        android:paddingLeft="10dp"
-        android:orientation="vertical">
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="70"
+            android:paddingLeft="10dp"
+            android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:id="@+id/achievement_title"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:textColor="#2d2d2d"/>
             <TextView
                 android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                 android:text="preview"
                 android:textSize="17sp"
                 android:id="@+id/achievement_description"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:textColor="#2d2d2d"/>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -52,12 +52,12 @@
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:id="@+id/simpleProgressBar"
                     android:progressTint="@color/blue"
-                    android:progressBackgroundTint="@color/grey"
+                    android:progressBackgroundTint="@color/cardBackground"
                     android:layout_weight="85"/>
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="20dp"
-                    android:layout_weight="15"
+                    android:layout_weight="0"
                     android:text="5"
                     android:paddingLeft="10dp"
                     android:id="@+id/achievement_target_number"/>

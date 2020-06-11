@@ -27,16 +27,18 @@
                 android:id="@+id/titleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="serif"
                 android:text="12 Rules For Life"
-                app:layout_constrainedWidth="true"
                 android:textColor="@android:color/black"
                 android:textSize="35dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constrainedWidth="true" />
 
             <TextView
                 android:id="@+id/contentTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/cantarell"
                 android:text="12 Rules For Life. The quick brown fox jumps over the lazy dog"
                 android:textColor="@android:color/black"
                 android:textSize="23dp"

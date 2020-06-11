@@ -218,7 +218,7 @@ public class ProfileHomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 streakLength = dataSnapshot.child("streak_length").getValue(int.class);
-                Achievement streakAchievement = new Achievement("Week Streak", "Use Fastbook continuously for 7 days"
+                Achievement streakAchievement = new Achievement("7 Day Streak", "Use Fastbook continuously for 7 days"
                         , String.valueOf(streakLength), "7", "https://i.imgur.com/NgRtLd2.jpg");
                 userRef.child("achievements").child("streak").setValue(streakAchievement);
             }
