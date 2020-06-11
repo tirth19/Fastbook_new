@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    
     package="com.gyansaarthi.fastbook">
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/fastbook_logo"
@@ -10,7 +12,8 @@
         android:roundIcon="@drawable/fastbook_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LibraryActivity"></activity>
+        <activity android:name=".NotificationView"></activity>
+        <activity android:name=".LibraryActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
@@ -24,7 +27,7 @@
         <activity android:name=".BookDescriptionActivity" />
         <activity android:name=".ChunkActivity" />
         <activity android:name=".Profile.ProfileHomeActivity" />
-        <activity android:name=".Profile.AccountSettingActivity"/>
+        <activity android:name=".Profile.AccountSettingActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

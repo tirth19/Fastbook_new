@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Fastbook</string>
+    <!-- Intent Extras -->
+    <string name="calling_activity">calling_activity</string>
+
+    <!-- Intent Extras -->
+    <string name="profile_activity">Profile Activity</string>
+    <string name="channel_name">Test channel name</string>
+    <string name="channel_description">Test</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="profile_fragment">Profile</string>
+
+    <string name="read_now">पढ़ें</string>
+    <string name="recommended">आपके लिए</string>
+    <string name="proceed_to_read">पढ़ने चलें</string>
+    <string name="description">विवरण</string>
+    <string name="welcome">स्वागत है!</string>
+    <string name="your_streak_is">आपकी लकीर है </string>
+    <string name="days"> दिन </string>
+    <string name="achievements">उपलब्धियां </string>
+    <string name="more_achievements">More achievements coming soon!</string>
+    <string name="explore_all">सब देखें</string>
+    <string name="top_in_hindi">हिंदी में शीर्ष किताबें</string>
+</resources>
+
+

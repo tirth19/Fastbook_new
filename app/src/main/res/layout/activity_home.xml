@@ -52,7 +52,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Recommended"
+                                    android:text="@string/recommended"
                                     android:textSize="30dp"
                                     android:padding="15dp"
                                     android:id="@+id/todaysbook">
@@ -62,7 +62,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_toEndOf="@+id/todaysbook"
                                     android:padding="15dp"
-                                    android:text="Proceed to Read"
+                                    android:text="@string/proceed_to_read"
                                     android:textSize="20dp"
                                     android:layout_gravity="center"
                                     android:layout_toRightOf="@+id/todaysbook" />
@@ -82,7 +82,7 @@
                         android:layout_below="@+id/todayscard"
                         android:padding="10dp"
                         android:id="@+id/heading"
-                        android:text="Explore all"
+                        android:text="@string/explore_all"
                         android:textStyle="bold"
                         android:textSize="25dp"
                         android:layout_gravity="center"/>
@@ -98,7 +98,7 @@
                         android:layout_below="@+id/recycler_view"
                         android:padding="10dp"
                         android:id="@+id/heading2"
-                        android:text="Top books in Hindi"
+                        android:text="@string/top_in_hindi"
                         android:textStyle="bold"
                         android:textSize="25dp"
                         android:layout_gravity="center"/>

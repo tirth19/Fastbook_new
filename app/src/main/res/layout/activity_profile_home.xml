@@ -65,7 +65,7 @@
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:textSize="25sp"
-                        android:text="Welcome!" />
+                        android:text="@string/welcome" />
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
                             android:textColor="@color/colorPrimaryDark"
                             android:textStyle="bold"
                             android:textSize="18sp"
-                            android:text="Your Streak is " />
+                            android:text="@string/your_streak_is" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -105,7 +105,7 @@
                             android:textColor="@color/colorPrimaryDark"
                             android:textStyle="bold"
                             android:textSize="18sp"
-                            android:text=" day(s)" />
+                            android:text="@string/days" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -113,7 +113,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Achievements"
+            android:text="@string/achievements"
             android:textSize="30dp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -131,7 +131,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp"
-            android:text="More achievements coming soon!"
+            android:text="@string/more_achievements"
             android:layout_below="@id/achievement_recycler_view"
             android:layout_centerHorizontal="true"
             android:paddingTop="40dp"/>
