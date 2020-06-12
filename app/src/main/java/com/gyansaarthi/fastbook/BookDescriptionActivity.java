@@ -140,7 +140,7 @@ public class BookDescriptionActivity extends AppCompatActivity {
                 //Adding key value pairs to this bundle
                 //there are quite a lot data types you can store in a bundle
                 extras.putString("BOOK_NAME",bookTitle);
-                Intent chunkIntent = new Intent(getApplicationContext(), ChunkActivity.class);
+                Intent chunkIntent = new Intent(getApplicationContext(), PageActivity.class);
                 chunkIntent.putExtras(extras);
                 startActivity(chunkIntent);
 
