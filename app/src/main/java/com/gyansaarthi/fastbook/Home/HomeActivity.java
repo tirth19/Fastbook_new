@@ -33,6 +33,7 @@ import com.gyansaarthi.fastbook.Utils.BottomNavigationViewHelper;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -176,6 +177,7 @@ public class HomeActivity extends AppCompatActivity {
         Log.d(TAG, "initRecyclerView: init recyclerview.");
 //        RecyclerView recyclerView = findViewById(R.id.recycler_view);
 //        mAdapter = new RecyclerViewAdapter(HomeActivity.this, mAuthor, mImageUrls, mBookName);
+        Collections.shuffle(bookCovers);
         newAdapter = new BookCoverAdapter(HomeActivity.this, bookCovers);
         rview.setAdapter(newAdapter);
 //        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));

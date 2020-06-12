@@ -24,6 +24,7 @@ import com.gyansaarthi.fastbook.Objects.BookCover;
 import com.gyansaarthi.fastbook.Objects.Chunk;
 import com.gyansaarthi.fastbook.R;
 
+import java.util.Collections;
 import java.util.List;
 
 public class BookCoverAdapter extends RecyclerView.Adapter<BookCoverAdapter.BookCoverViewHolder>{
