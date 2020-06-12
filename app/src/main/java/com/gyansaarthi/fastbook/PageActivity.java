@@ -8,6 +8,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -27,8 +28,9 @@ public class PageActivity extends AppCompatActivity {
     List<Chunk> chunks;
     ViewPagerAdapter mAdapter;
     DatabaseReference bookRef;
-    private int currentPage;
     Context mContext;
+    private static int currentPage, numOfBooks;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +41,24 @@ public class PageActivity extends AppCompatActivity {
         chunks = new ArrayList<>();
         mContext=this;
         loadBook(bookTitle);
+        TextView pageNumberTextView;
+
+        pageNumberTextView = findViewById(R.id.pageNumberTextView);
+        pageNumberTextView.setText(1 + " of " + numOfBooks);
     }
 
-    private static class PageListener extends ViewPager.SimpleOnPageChangeListener {
-        private int currentPage;
+    private class PageListener extends ViewPager.SimpleOnPageChangeListener {
+
 
         public void onPageSelected(int position) {
             Log.i(TAG, "page selected " + position);
-            currentPage = position;
+            currentPage = position+1;
+            Log.i(TAG, "page selected " + currentPage);
+            TextView pageNumberTextView;
+
+            pageNumberTextView = findViewById(R.id.pageNumberTextView);
+            pageNumberTextView.setText(currentPage + " of " + numOfBooks);
+
         }
     }
 
@@ -63,7 +75,7 @@ public class PageActivity extends AppCompatActivity {
                     ));
                 }
 
-                long numOfBooks=dataSnapshot.getChildrenCount();
+                numOfBooks = (int) dataSnapshot.getChildrenCount();
                 Log.d(TAG, "Value is: " + numOfBooks);
                 //Toast.makeText(ChunkActivity.this, "Num of pages" + numOfBooks, Toast.LENGTH_LONG).show();
                 mAdapter= new ViewPagerAdapter(chunks, PageActivity.this);
@@ -72,7 +84,6 @@ public class PageActivity extends AppCompatActivity {
                 int pagePosition=viewPager.getCurrentItem()+1;
                 PageListener pageListener = new PageListener();
                 viewPager.setOnPageChangeListener(pageListener);
-                Toast.makeText(PageActivity.this, "Plage "+ pagePosition, Toast.LENGTH_SHORT).show();
 
             }
             @Override

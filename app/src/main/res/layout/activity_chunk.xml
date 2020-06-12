@@ -26,11 +26,6 @@
         android:id="@+id/pageNavigation"
             android:layout_centerHorizontal="true"
             android:orientation="horizontal">
-<!--            <Button-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="prev"-->
-<!--                android:id="@+id/prevButton"/>-->
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
