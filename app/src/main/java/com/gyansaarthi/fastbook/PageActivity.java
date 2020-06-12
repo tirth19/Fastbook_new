@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -26,6 +27,8 @@ public class PageActivity extends AppCompatActivity {
     List<Chunk> chunks;
     ViewPagerAdapter mAdapter;
     DatabaseReference bookRef;
+    private int currentPage;
+    Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +37,17 @@ public class PageActivity extends AppCompatActivity {
         final String bookTitle= getIntent().getExtras().getString("BOOK_NAME");
 
         chunks = new ArrayList<>();
+        mContext=this;
         loadBook(bookTitle);
+    }
+
+    private static class PageListener extends ViewPager.SimpleOnPageChangeListener {
+        private int currentPage;
+
+        public void onPageSelected(int position) {
+            Log.i(TAG, "page selected " + position);
+            currentPage = position;
+        }
     }
 
     private void loadBook(String bookTitle){
@@ -56,6 +69,10 @@ public class PageActivity extends AppCompatActivity {
                 mAdapter= new ViewPagerAdapter(chunks, PageActivity.this);
                 viewPager= findViewById(R.id.viewPager);
                 viewPager.setAdapter(mAdapter);
+                int pagePosition=viewPager.getCurrentItem()+1;
+                PageListener pageListener = new PageListener();
+                viewPager.setOnPageChangeListener(pageListener);
+                Toast.makeText(PageActivity.this, "Plage "+ pagePosition, Toast.LENGTH_SHORT).show();
 
             }
             @Override
@@ -67,4 +84,5 @@ public class PageActivity extends AppCompatActivity {
         };
         bookRef.addListenerForSingleValueEvent(eventListener);
     }
+
 }

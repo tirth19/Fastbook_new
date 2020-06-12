@@ -18,11 +18,12 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/headingTextView"
                 android:text="Quick Brown"
-                android:textSize="30dp"/>
+                android:textSize="40dp"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/contentTextViewPage"
+                android:textSize="30dp"
                 android:text="sample"/>
             </LinearLayout>
         </ScrollView>
