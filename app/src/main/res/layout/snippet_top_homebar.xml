@@ -15,16 +15,17 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:id="@+id/discover"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="sans-serif"
                     android:text="Discover"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
                     android:textSize="25sp"
-                    android:id="@+id/discover"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp" />
+                    android:textStyle="bold" />
 
                 
                 <ImageView

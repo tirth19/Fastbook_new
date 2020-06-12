@@ -2,5 +2,8 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/cantarell</item>
+        <item>@font/crimson_text</item>
+        <item>@font/crimson_text_bold</item>
+
     </array>
 </resources>
