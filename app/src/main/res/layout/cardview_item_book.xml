@@ -24,8 +24,7 @@
                     android:textSize="16sp"
                     android:id="@+id/author"
                     android:maxLines="2"
-                    android:textColor="#2d2d2d"
-                    android:paddingBottom="20dp"/>
+                    android:textColor="#2d2d2d" />
         </LinearLayout>
 </RelativeLayout>
 
