@@ -16,22 +16,39 @@
             android:id="@+id/relLayout2"
             android:paddingBottom="50dp">
 
+
+
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context=".HomeActivity"
                 android:orientation="vertical">
+
+
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="0dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/relLayout1">
+
+                        <include layout="@layout/snippet_top_homebar"/>
+
+                    </RelativeLayout>
+
+
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="190dp"
                         app:cardCornerRadius="30dp"
                         android:layout_margin="20dp"
-                        app:cardBackgroundColor="@color/cardBackground"
-                        android:id="@+id/todayscard">
+                        app:cardBackgroundColor="@color/blue"
+                        android:id="@+id/todayscard"
+                        android:layout_below="@id/relLayout1">
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
@@ -42,12 +59,16 @@
                                 android:gravity="center_vertical"
                                 android:id="@+id/left_text_view">
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="200dp"
                                     android:layout_height="wrap_content"
                                     android:text="@string/recommended"
-                                    android:textSize="30dp"
                                     android:padding="15dp"
-                                    android:id="@+id/todaysbook">
+                                    android:id="@+id/todaysbook"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/white"
+                                    android:textSize="22dp"
+                                    android:maxLines="2"
+                                    android:layout_gravity="center">
                                 </TextView>
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -55,17 +76,26 @@
                                     android:layout_toEndOf="@+id/todaysbook"
                                     android:padding="15dp"
                                     android:text="@string/proceed_to_read"
-                                    android:textSize="20dp"
-                                    android:layout_gravity="center"
+                                    android:textSize="17dp"
+                                    android:textColor="@color/white"
                                     android:layout_toRightOf="@+id/todaysbook" />
                             </LinearLayout>
+
                             <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="150dp"
                                 android:id="@+id/todaysImageView"
-                                android:gravity="center_vertical"
-                                android:paddingTop="20dp"
-                                android:layout_toRightOf="@id/left_text_view"/>
+                                android:layout_width="80dp"
+                                android:layout_height="120dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentBottom="true"
+                                android:scaleType="centerCrop"
+                                android:layout_marginTop="35dp"
+                                android:layout_marginEnd="31dp"
+                                android:layout_marginRight="31dp"
+                                android:layout_marginBottom="35dp"
+                                android:background="@drawable/round_image"/>
+                            />
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
                     <TextView
@@ -109,10 +139,10 @@
                         android:layout_below="@+id/heading2"
                         android:id="@+id/recycler_view2"/>
 
-
                 </RelativeLayout>
             </ScrollView>
         </RelativeLayout>
+
 
         <include layout="@layout/layout_bottom_navigation_view"/>
 

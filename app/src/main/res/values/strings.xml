@@ -11,8 +11,8 @@
     <string name="sign_out">Sign Out</string>
     <string name="profile_fragment">Profile</string>
     <string name="read_now">Read Now</string>
-    <string name="recommended">Recommended</string>
-    <string name="proceed_to_read">Proceed to Read</string>
+    <string name="recommended">Recommended book for you!</string>
+    <string name="proceed_to_read">Read Now ></string>
     <string name="description">Description</string>
     <string name="welcome">Welcome!</string>
     <string name="your_streak_is">Your Streak is  </string>

@@ -3,6 +3,7 @@ package com.gyansaarthi.fastbook.Home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,6 +31,7 @@ import com.gyansaarthi.fastbook.BookDescriptionActivity;
 //import com.gyansaarthi.fastbook.Login.LoginActivity;
 import com.gyansaarthi.fastbook.Objects.BookCover;
 import com.gyansaarthi.fastbook.R;
+import com.gyansaarthi.fastbook.SearchActivity;
 import com.gyansaarthi.fastbook.Utils.BottomNavigationViewHelper;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
@@ -76,6 +79,7 @@ public class HomeActivity extends AppCompatActivity {
 //        setupFireBaseAuth();
 //        initImageLoader();
         setupBottomNavigationView();
+        setupSearch();
 //        setupViewPager();
 
     }
@@ -184,6 +188,17 @@ public class HomeActivity extends AppCompatActivity {
         rview.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
     }
 
+    private void setupSearch(){
+        ImageView searchIcon = findViewById(R.id.profileMenuSearch);
+        searchIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
     private void initFeaturedbook(){
         Log.d(TAG, "initBitmaps: preparing bitmaps.");
         homepageRef= FirebaseDatabase.getInstance().getReference("collections/featured_books");
@@ -193,10 +208,14 @@ public class HomeActivity extends AppCompatActivity {
                     final String featuredBook1 = dataSnapshot.getValue(String.class);
                 DatabaseReference bookRef = FirebaseDatabase.getInstance().getReference("books/"+featuredBook1);
                 ValueEventListener otherEventListener = new ValueEventListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String thumbnail = dataSnapshot.child("thumbnail").getValue(String.class);
                         ImageView todaysImageView=findViewById(R.id.todaysImageView);
+                        todaysImageView.setRotation(10);
+                        todaysImageView.setClipToOutline(true);
+
                         Glide.with(mContext)
                                 .asBitmap()
                                 .load(thumbnail)
