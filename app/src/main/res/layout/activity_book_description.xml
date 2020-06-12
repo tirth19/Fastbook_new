@@ -6,7 +6,7 @@
     tools:context=".BookDescriptionActivity">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
     <ImageView
         android:layout_width="200dp"
@@ -14,31 +14,29 @@
         android:layout_gravity="center"
         android:id="@+id/bookcoverImageView"
         android:layout_marginTop="40dp"
-        android:outlineAmbientShadowColor="@color/colorAccent"
         android:background="@drawable/round_image">
     </ImageView>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="35dp"
-        android:id="@+id/bookTitleTextView"
-        android:textColor="#000000"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center"
-        android:text="Book Title" />
+        <TextView
+            android:id="@+id/bookTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25dp"
-        android:id="@+id/authorTextView"
-        android:textColor="#878383"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
-        android:text="Book Title" />
+        <TextView
+            android:id="@+id/authorTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="18dp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:gravity="center"
+            android:textSize="25sp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="200dp"
@@ -50,23 +48,28 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/button_background" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/description"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_bold"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="20dp"
+            android:text="@string/description"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/descriptionTextView"
-        android:text="This is sample description of the bookCover"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:textColor="#000000" />
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="20dp"
+            android:textColor="#000000"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
