@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,7 +31,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.gyansaarthi.fastbook.Adapters.BookCoverAdapter;
 import com.gyansaarthi.fastbook.BookDescriptionActivity;
 //import com.gyansaarthi.fastbook.Login.LoginActivity;
+import com.gyansaarthi.fastbook.CollectionActivity;
 import com.gyansaarthi.fastbook.Objects.BookCover;
+import com.gyansaarthi.fastbook.PageActivity;
 import com.gyansaarthi.fastbook.R;
 import com.gyansaarthi.fastbook.SearchActivity;
 import com.gyansaarthi.fastbook.Utils.BottomNavigationViewHelper;
@@ -81,6 +85,34 @@ public class HomeActivity extends AppCompatActivity {
         setupBottomNavigationView();
         setupSearch();
 //        setupViewPager();
+        TextView seeAllView =findViewById(R.id.button1);
+        seeAllView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle extras = new Bundle();
+                //Adding key value pairs to this bundle
+                //there are quite a lot data types you can store in a bundle
+                extras.putString("COLLECTION_NAME","homepage");
+                Intent chunkIntent = new Intent(getApplicationContext(), CollectionActivity.class);
+                chunkIntent.putExtras(extras);
+                startActivity(chunkIntent);
+
+            }
+        });
+        TextView seeAllView2 =findViewById(R.id.button2);
+        seeAllView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle extras = new Bundle();
+                //Adding key value pairs to this bundle
+                //there are quite a lot data types you can store in a bundle
+                extras.putString("COLLECTION_NAME","hinditop10");
+                Intent chunkIntent = new Intent(getApplicationContext(), CollectionActivity.class);
+                chunkIntent.putExtras(extras);
+                startActivity(chunkIntent);
+
+            }
+        });
 
     }
     private class DownloadFilesTask extends AsyncTask<String, Integer, Long> {

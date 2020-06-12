@@ -12,7 +12,8 @@
         android:roundIcon="@drawable/fastbook_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PageActivity"></activity>
+        <activity android:name=".CollectionActivity"></activity>
+        <activity android:name=".PageActivity" />
         <activity android:name=".NotificationView" />
         <activity android:name=".LibraryActivity" />
         <activity android:name=".SearchActivity" />
