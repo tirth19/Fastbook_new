@@ -6,8 +6,10 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,14 +39,27 @@ public class PageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_page);
         final String bookTitle= getIntent().getExtras().getString("BOOK_NAME");
+        final int chapter= getIntent().getExtras().getInt("CHAPTER");
 
         chunks = new ArrayList<>();
         mContext=this;
-        loadBook(bookTitle);
+        loadBook(bookTitle, chapter);
         TextView pageNumberTextView;
 
         pageNumberTextView = findViewById(R.id.pageNumberTextView);
         pageNumberTextView.setText(1 + " of " + numOfBooks);
+        pageNumberTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle extras = new Bundle();
+                //Adding key value pairs to this bundle
+                //there are quite a lot data types you can store in a bundle
+                extras.putString("BOOK_NAME",bookTitle);
+                Intent chunkIntent = new Intent(getApplicationContext(), IndexActivity.class);
+                chunkIntent.putExtras(extras);
+                startActivity(chunkIntent);
+            }
+        });
     }
 
     private class PageListener extends ViewPager.SimpleOnPageChangeListener {
@@ -62,7 +77,7 @@ public class PageActivity extends AppCompatActivity {
         }
     }
 
-    private void loadBook(String bookTitle){
+    private void loadBook(String bookTitle, final int chapter){
         Log.d(TAG, "loadBook: ");
         bookRef= FirebaseDatabase.getInstance().getReference("books/"+bookTitle+"/contents");
         ValueEventListener eventListener = new ValueEventListener() {
@@ -84,6 +99,7 @@ public class PageActivity extends AppCompatActivity {
                 int pagePosition=viewPager.getCurrentItem()+1;
                 PageListener pageListener = new PageListener();
                 viewPager.setOnPageChangeListener(pageListener);
+                viewPager.setCurrentItem(chapter);
 
             }
             @Override
