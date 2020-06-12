@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Home.HomeActivity"
-    android:background="@color/colorPrimary">
+    tools:context=".Home.HomeActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -59,30 +58,27 @@
                                 android:orientation="vertical"
                                 android:gravity="center_vertical"
                                 android:id="@+id/left_text_view">
-
                                 <TextView
-                                    android:id="@+id/todaysbook"
                                     android:layout_width="200dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:fontFamily="@font/open_sans_bold"
-                                    android:maxLines="2"
-                                    android:padding="15dp"
                                     android:text="@string/recommended"
+                                    android:padding="15dp"
+                                    android:id="@+id/todaysbook"
+                                    android:textStyle="bold"
                                     android:textColor="@color/white"
                                     android:textSize="22dp"
-                                    android:textStyle="bold"></TextView>
-
+                                    android:maxLines="2"
+                                    android:layout_gravity="center">
+                                </TextView>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_toEndOf="@+id/todaysbook"
-                                    android:layout_toRightOf="@+id/todaysbook"
-                                    android:fontFamily="@font/open_sans"
                                     android:padding="15dp"
                                     android:text="@string/proceed_to_read"
+                                    android:textSize="17dp"
                                     android:textColor="@color/white"
-                                    android:textSize="17dp" />
+                                    android:layout_toRightOf="@+id/todaysbook" />
                             </LinearLayout>
 
                             <ImageView
@@ -102,50 +98,83 @@
                             />
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
-
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_below="@+id/todayscard"
+                        android:id="@+id/linear_layout1"
+                        android:paddingTop="20dp"
+                        android:paddingStart="20dp"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="20dp">
                     <TextView
-                        android:id="@+id/heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/todayscard"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/open_sans_bold"
-                        android:paddingStart="20dp"
-                        android:paddingLeft="20dp"
-                        android:paddingTop="20dp"
-                        android:paddingBottom="10dp"
+                        android:id="@+id/heading"
                         android:text="@string/explore_all"
+                        android:textStyle="bold"
                         android:textColor="@color/black"
                         android:textSize="22dp"
-                        android:textStyle="bold" />
+                        android:layout_gravity="center"
+                         />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="22dp"
+                            android:text="@string/see_all"
+                            android:textSize="15dp"
+                            android:textStyle="bold"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:id="@+id/button1"
+                            android:background="@drawable/button_background2" />
+                    </RelativeLayout>
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/heading"
+                        android:layout_below="@+id/linear_layout1"
                         android:id="@+id/recycler_view"
                         />
-
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/recycler_view"
+                    android:id="@+id/linear_layout2"
+                    android:paddingTop="20dp"
+                    android:paddingStart="20dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp">
                     <TextView
-                        android:id="@+id/heading2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/recycler_view"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/open_sans_bold"
-                        android:paddingStart="20dp"
-                        android:paddingLeft="20dp"
-                        android:paddingTop="20dp"
-                        android:paddingBottom="10dp"
+                        android:id="@+id/heading2"
                         android:text="@string/top_in_hindi"
+                        android:textStyle="bold"
                         android:textColor="@color/black"
                         android:textSize="22dp"
-                        android:textStyle="bold" />
+                        android:layout_gravity="center"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="22dp"
+                        android:text="@string/see_all"
+                        android:textSize="15dp"
+                        android:textStyle="bold"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:id="@+id/button2"
+                        android:background="@drawable/button_background2" />
+                </RelativeLayout>
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/heading2"
+                        android:layout_below="@+id/linear_layout2"
                         android:id="@+id/recycler_view2"/>
-
                 </RelativeLayout>
             </ScrollView>
         </RelativeLayout>
