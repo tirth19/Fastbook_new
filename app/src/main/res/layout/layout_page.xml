@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="10dp">
         <ScrollView
             android:layout_width="match_parent"
@@ -14,24 +14,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/headingTextView"
-                android:text="Quick Brown"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="30dp"
-                android:layout_margin="10dp"
-                android:layout_marginBottom="15dp"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/contentTextViewPage"
-                android:textSize="22dp"
-                android:textColor="@color/black"
-                android:text="sample"
-                android:paddingLeft="10dp"/>
+
+                <TextView
+                    android:id="@+id/headingTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:fontFamily="@font/crimson_text_bold"
+                    android:text="Quick Brown"
+                    android:textColor="@color/black"
+                    android:textSize="30dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/contentTextViewPage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/crimson_text"
+                    android:lineSpacingExtra="3dp"
+                    android:padding="20dp"
+                    android:text="sample"
+                    android:textColor="@color/black"
+                    android:textSize="22dp" />
             </LinearLayout>
         </ScrollView>
     </androidx.cardview.widget.CardView>

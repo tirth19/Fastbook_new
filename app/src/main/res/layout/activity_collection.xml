@@ -4,9 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     tools:context=".CollectionActivity">
-    <androidx.recyclerview.widget.RecyclerView
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/collection_recycler"/>
+        android:id="@+id/relLayout1"
+        android:layout_alignParentTop="true">
+
+        <include layout="@layout/snippet_top_homebar"/>
+
+    </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/collection_recycler"
+        android:layout_below="@id/relLayout1"
+        android:layout_centerHorizontal="true"
+        android:paddingLeft="20dp" />
 </RelativeLayout>

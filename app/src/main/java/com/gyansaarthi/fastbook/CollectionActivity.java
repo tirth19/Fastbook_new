@@ -2,6 +2,7 @@ package com.gyansaarthi.fastbook;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -33,6 +35,7 @@ public class CollectionActivity extends AppCompatActivity {
     List<BookCover> bookCoverList ;
 
     BookCoverAdapter newAdapter;
+    TextView pageName;
 
     private Context mContext = CollectionActivity.this;
 
@@ -41,9 +44,11 @@ public class CollectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection);
         final String collectionTitle= getIntent().getExtras().getString("COLLECTION_NAME");
-
         bookCoverList = new ArrayList<>();
         new LoadCollectionAsyncTask().execute(collectionTitle);
+        pageName = findViewById(R.id.discover);
+        pageName.setText(collectionTitle);
+
 
     }
     private class LoadCollectionAsyncTask extends AsyncTask<String, Integer, Long> {
