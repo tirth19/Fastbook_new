@@ -150,6 +150,5 @@ public class PageActivity extends AppCompatActivity {
 
         DatabaseReference userRef=FirebaseDatabase.getInstance().getReference("users/"+user);
         userRef.child("/library").child(bookTitle).child("pages_read").setValue(pageNumber);
-        Toast.makeText(mContext, "Your last page was " + pageNumber, Toast.LENGTH_SHORT).show();
     }
 }
