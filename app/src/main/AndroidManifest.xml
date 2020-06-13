@@ -31,6 +31,7 @@
         <activity android:name=".ChunkActivity" />
         <activity android:name=".Profile.ProfileHomeActivity" />
         <activity android:name=".Profile.AccountSettingActivity" />
+        <receiver android:name=".AlarmReceiver" />
 
         <meta-data
             android:name="preloaded_fonts"

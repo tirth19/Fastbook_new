@@ -3,6 +3,7 @@ package com.gyansaarthi.fastbook;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -19,6 +20,8 @@ import android.widget.Button;
 import com.gyansaarthi.fastbook.Home.HomeActivity;
 import com.gyansaarthi.fastbook.Utils.BottomNavigationViewHelper;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+
+import java.util.Calendar;
 
 public class LibraryActivity extends AppCompatActivity {
     Button b1;
@@ -41,6 +44,14 @@ final String CHANNEL_ID="something";
                 addNotification();
             }
         });
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 18);
+        calendar.set(Calendar.MINUTE, 20);
+        calendar.set(Calendar.SECOND, 0);
+        Intent intent1 = new Intent(LibraryActivity.this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(LibraryActivity.this, 0,intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) LibraryActivity.this.getSystemService(LibraryActivity.this.ALARM_SERVICE);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
     private void addNotification() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
