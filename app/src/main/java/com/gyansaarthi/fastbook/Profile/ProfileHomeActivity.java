@@ -99,7 +99,7 @@ public class ProfileHomeActivity extends AppCompatActivity {
         //Getting user reference in db
         final String user = FirebaseAuth.getInstance().getUid();
         userRef= FirebaseDatabase.getInstance().getReference("users/"+user);
-        updateStreakAchievement(user);
+        fetchStreakLength(user);
         ValueEventListener otherEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -113,6 +113,8 @@ public class ProfileHomeActivity extends AppCompatActivity {
             }
 
         };
+
+        //Setting up each achievement individually.
         ImageView imageView1 = findViewById(R.id.achievementThumbnail1);
         ProgressBar progressBar1 = findViewById(R.id.simpleProgressBar1);
         setUpAchievement(imageView1,progressBar1 , "https://i.imgur.com/lAUU3af.png", 0, 7);
@@ -198,7 +200,6 @@ public class ProfileHomeActivity extends AppCompatActivity {
 
                 long numOfAch=dataSnapshot.getChildrenCount();
                 Log.d(TAG, "No. of achievements: " + numOfAch);
-                initAchievementRecyclerView();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -228,28 +229,19 @@ public class ProfileHomeActivity extends AppCompatActivity {
         progressBar.setMax(target);
         progressBar.setProgress(progAchieved);
     }
-    private void initAchievementRecyclerView(){
-        Log.d(TAG, "initAchievementRecyclerView: ");
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView recyclerView=findViewById(R.id.achievement_recycler_view);
-        mAchAdapter = new AchievementAdapter(ProfileHomeActivity.this, achievementList);
-        recyclerView.setAdapter(mAchAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        //creating adapter object and setting it to recyclerview
-//        ChunkAdapter adapter = new ChunkAdapter(ChunkActivity.this, chunkList);
-        /*        RecyclerViewAdapter adapter= new RecyclerViewAdapter(mHeadings, mContent, this);*/
 
+    private void setProgressAchieved(int progAchieved, ProgressBar progressBar){
+        progressBar.setProgress(progAchieved);
     }
 
-    private void updateStreakAchievement(String user){
+    private void fetchStreakLength(String user){
         userRef=FirebaseDatabase.getInstance().getReference("users/"+user);
         ValueEventListener otherEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 streakLength = dataSnapshot.child("streak_length").getValue(int.class);
-                Achievement streakAchievement = new Achievement("7 Day Streak", "Use Fastbook continuously for 7 days"
-                        , String.valueOf(streakLength), "7", "https://i.imgur.com/NgRtLd2.jpg");
-                userRef.child("achievements").child("streak").setValue(streakAchievement);
+                ProgressBar progressBar1 = findViewById(R.id.simpleProgressBar1);
+                setProgressAchieved(streakLength, progressBar1);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -261,20 +253,6 @@ public class ProfileHomeActivity extends AppCompatActivity {
 
     }
 
-//    private void setProfileWidgets(UserSettings userSettings){
-//
-//        Log.d(TAG, "setProfileWidgets: setting widgets form data retrieved from firebase database " + userSettings.toString());
-//        // User user = userSettings.getUser();
-//        UserAccountSettings settings = userSettings.getSettings();
-//
-//        UniversalImageLoader.setImage(settings.getProfile_photo(), mProfilePhoto, null, "");
-//
-//        mDisplayName.setText(settings.getDisplay_name());
-//        // mProgressBar.setVisibility(View.GONE);
-//
-//
-//
-//    }
 
     //-------------------------------Firebase---------------------------
     //setup the firebase auth object

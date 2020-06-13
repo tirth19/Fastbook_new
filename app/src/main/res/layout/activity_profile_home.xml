@@ -116,15 +116,10 @@
             android:id="@+id/achievement_header"
             android:layout_below="@+id/relLayout2"
             android:paddingLeft="10dp"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/achievement_header"
-            android:id="@+id/achievement_recycler_view"/>
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/achievement_recycler_view">
+            android:layout_below="@id/achievement_header">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
