@@ -24,6 +24,14 @@
     <string name="explore_all">सब देखें</string>
     <string name="top_in_hindi">हिंदी में शीर्ष किताबें</string>
     <string name="see_all">सारी देखें</string>
+    <string name="streak_title">7 Day Streak</string>
+    <string name="streak_description">Use fastbook continuously for 7 days</string>
+    <string name="first_book_title">One Small Step</string>
+    <string name="first_book_description">Finish reading your first book summary</string>
+    <string name="profile_picture_title">Photogenic</string>
+    <string name="profile_picture_description">Upload your profile picture</string>
+    <string name="continue_reading">Continue Reading</string>
+
 </resources>
 
 

@@ -42,12 +42,13 @@ public class BookDescriptionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_description);
         final String bookTitle= getIntent().getExtras().getString("BOOK_NAME");
+        final int pagesRead= getIntent().getExtras().getInt("CHAPTER");
         bookNodeRef= FirebaseDatabase.getInstance().getReference("books/"+bookTitle);
 
         Button readButton = (Button) findViewById(R.id.readNowButton);
-        final TextView authorView = findViewById(R.id.authorTextView);
         final TextView bookName = findViewById(R.id.bookTitleTextView);
-        final TextView descriptionView = findViewById(R.id.descriptionTextView);
+        final TextView authorTextView = findViewById(R.id.authorTextView);
+        final TextView descriptionTextView = findViewById(R.id.descriptionTextView);
         mContext= this;
 
       //  setupBottomNavigationView();
@@ -70,58 +71,29 @@ public class BookDescriptionActivity extends AppCompatActivity {
                 Toast.makeText(BookDescriptionActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
             }
         });*/
-        bookNameRef = bookNodeRef.child("book_title");
-        bookNameRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        bookNodeRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
-                bookName.setText(value);
+                String title = dataSnapshot.child("book_title").getValue(String.class);
+                String author= dataSnapshot.child("book_author").getValue(String.class);
+                String thumbnail= dataSnapshot.child("thumbnail").getValue(String.class);
+                String description= dataSnapshot.child("book_description").getValue(String.class);
+                long totalPages=dataSnapshot.child("contents").getChildrenCount();
+                bookName.setText(title);
+                final ImageView bookCover = findViewById(R.id.bookcoverImageView);
+                bookCover.setClipToOutline(true);
+                Glide.with(mContext).load(thumbnail).into(bookCover);
+                authorTextView.setText(author);
+                descriptionTextView.setText(description);
+                final String user = FirebaseAuth.getInstance().getUid();
+                DatabaseReference userRef= FirebaseDatabase.getInstance().getReference("users/"+user);
+                userRef.child("library").child(bookTitle).child("title").setValue(bookTitle);
+                userRef.child("library").child(bookTitle).child("author").setValue(author);
+                userRef.child("library").child(bookTitle).child("thumbnail").setValue(thumbnail);
+                userRef.child("library").child(bookTitle).child("total_pages").setValue(totalPages);
+                userRef.child("library").child(bookTitle).child("pages_read").setValue(pagesRead);
             }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BookDescriptionActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
-            }
-        });
-
-        final ImageView bookCover = findViewById(R.id.bookcoverImageView);
-        bookCover.setClipToOutline(true);
-
-        bookNodeRef.child("thumbnail").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
-//                val imageView = ImageView(this)
-                Glide.with(mContext).load(value).into(bookCover);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BookDescriptionActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
-            }
-        });
-
-        final TextView authorTextView = findViewById(R.id.authorTextView);
-        bookNodeRef.child("book_author").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
-                authorTextView.setText(value);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(BookDescriptionActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
-            }
-        });
-
-        final TextView description = findViewById(R.id.descriptionTextView);
-        bookNodeRef.child("book_description").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
-                description.setText(value);
-            }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(BookDescriptionActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
@@ -132,15 +104,12 @@ public class BookDescriptionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Getting user reference in db
-                final String user = FirebaseAuth.getInstance().getUid();
-                DatabaseReference userRef= FirebaseDatabase.getInstance().getReference("users/"+user);
-                userRef.child("library").child(bookTitle).setValue(bookTitle);
 
                 Bundle extras = new Bundle();
                 //Adding key value pairs to this bundle
                 //there are quite a lot data types you can store in a bundle
                 extras.putString("BOOK_NAME",bookTitle);
-                extras.putInt("CHAPTER",0);
+                extras.putInt("CHAPTER",pagesRead);
                 Intent chunkIntent = new Intent(getApplicationContext(), PageActivity.class);
                 chunkIntent.putExtras(extras);
                 startActivity(chunkIntent);

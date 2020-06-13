@@ -2,6 +2,7 @@ package com.gyansaarthi.fastbook;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -13,15 +14,19 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.gyansaarthi.fastbook.Adapters.ViewPagerAdapter;
+import com.gyansaarthi.fastbook.Home.HomeActivity;
+import com.gyansaarthi.fastbook.Objects.BookCover;
 import com.gyansaarthi.fastbook.Objects.Chunk;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class PageActivity extends AppCompatActivity {
@@ -29,9 +34,10 @@ public class PageActivity extends AppCompatActivity {
     ViewPager viewPager;
     List<Chunk> chunks;
     ViewPagerAdapter mAdapter;
-    DatabaseReference bookRef;
+    DatabaseReference bookRef, bookCoverRef;
     Context mContext;
     private static int currentPage, numOfBooks;
+    List<BookCover> bookCoverListrand;
 
 
     @Override
@@ -42,6 +48,7 @@ public class PageActivity extends AppCompatActivity {
         final int chapter= getIntent().getExtras().getInt("CHAPTER");
 
         chunks = new ArrayList<>();
+        bookCoverListrand = new ArrayList<>();
         mContext=this;
         loadBook(bookTitle, chapter);
         TextView pageNumberTextView;
@@ -110,6 +117,39 @@ public class PageActivity extends AppCompatActivity {
 //            ChunkAdapter adapter = new ChunkAdapter(ChunkActivity.this, chunkList);
         };
         bookRef.addListenerForSingleValueEvent(eventListener);
+
+        bookCoverRef= FirebaseDatabase.getInstance().getReference("collections/homepage/"+bookTitle);
+        ValueEventListener eventListener2 = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    bookCoverListrand.add(new BookCover(
+                            ds.child("title").getValue(String.class),
+                            ds.child("author").getValue(String.class),
+                            ds.child("thumbnail").getValue(String.class),
+                            10, 0
+                    ));
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(PageActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
+            }
+            //creating adapter object and setting it to recyclerview
+//            BookAdapter adapter = new BookAdapter(MainActivity.this, bookList);
+        };
+        bookCoverRef.addListenerForSingleValueEvent(eventListener2);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        int pageNumber = viewPager.getCurrentItem()+1;
+        final String user = FirebaseAuth.getInstance().getUid();
+        final String bookTitle= getIntent().getExtras().getString("BOOK_NAME");
+
+        DatabaseReference userRef=FirebaseDatabase.getInstance().getReference("users/"+user);
+        userRef.child("/library").child(bookTitle).child("pages_read").setValue(pageNumber);
+        Toast.makeText(mContext, "Your last page was " + pageNumber, Toast.LENGTH_SHORT).show();
+    }
 }

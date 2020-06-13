@@ -31,6 +31,7 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         this.achievementList = achievementList;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public AchievementViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mCtx);
