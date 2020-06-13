@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,9 +30,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.gyansaarthi.fastbook.Adapters.BookCoverAdapter;
+import com.gyansaarthi.fastbook.Adapters.LibraryAdapter;
 import com.gyansaarthi.fastbook.BookDescriptionActivity;
 //import com.gyansaarthi.fastbook.Login.LoginActivity;
 import com.gyansaarthi.fastbook.CollectionActivity;
+import com.gyansaarthi.fastbook.LibraryActivity;
 import com.gyansaarthi.fastbook.Objects.BookCover;
 import com.gyansaarthi.fastbook.PageActivity;
 import com.gyansaarthi.fastbook.R;
@@ -52,9 +55,10 @@ public class HomeActivity extends AppCompatActivity {
     private ArrayList<String> mImageUrls = new ArrayList<>();
     private ArrayList<String> mBookName = new ArrayList<>();
 
-    List<BookCover> bookCoverList, bookCoverList2 ;
+    List<BookCover> bookCoverList, bookCoverList2, bookCoverList3 ;
 
     BookCoverAdapter newAdapter;
+    LibraryAdapter newLibAdapter;
     DatabaseReference homepageRef;
     ProgressBar loadingProgressBar;
 
@@ -72,12 +76,14 @@ public class HomeActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: starting.. ");
         bookCoverList = new ArrayList<>();
         bookCoverList2 = new ArrayList<>();
+        bookCoverList3 = new ArrayList<>();
 
         loadingProgressBar=findViewById(R.id.loadingPanel);
         loadingProgressBar.setVisibility(View.VISIBLE);
  //       initCollection("homepage", mainrecycler);
         new DownloadFilesTask().execute("homepage");
         new DownloadFilesTask2().execute("hinditop10");
+        new DownloadFilesTask3().execute("library");
         initFeaturedbook();
 
 //        setupFireBaseAuth();
@@ -209,6 +215,55 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    private class DownloadFilesTask3 extends AsyncTask<String, Integer, Long> {
+
+        protected void onPreExecute(){
+
+
+//            Toast.makeText(getApplicationContext(), "Loading 1st recycler", Toast.LENGTH_SHORT).show();
+        }
+        @Override
+        protected Long doInBackground(String... strings) {
+            Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
+            final String user = FirebaseAuth.getInstance().getUid();
+            DatabaseReference userLibRef= FirebaseDatabase.getInstance().getReference("users/"+user);
+
+            ValueEventListener eventListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                        bookCoverList3.add(new BookCover(
+                                ds.child("title").getValue(String.class),
+                                ds.child("author").getValue(String.class),
+                                ds.child("thumbnail").getValue(String.class),
+                                ds.child("total_pages").getValue(int.class),
+                                ds.child("pages_read").getValue(int.class)
+                        ));
+                    }
+
+                    long numOfBooks=dataSnapshot.getChildrenCount();
+                    Log.d(TAG, "Value is: " + numOfBooks);
+                    RecyclerView mainRecycler = findViewById(R.id.recycler_view3);
+                    initRecyclerView2(mainRecycler, bookCoverList3);
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(HomeActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
+                }
+                //creating adapter object and setting it to recyclerview
+//            BookAdapter adapter = new BookAdapter(MainActivity.this, bookList);
+            };
+            userLibRef.child(strings[0]).addListenerForSingleValueEvent(eventListener);
+            return null;
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+        }
+        protected void onPostExecute(Long result) {
+            findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+        }
+    }
+
     private void initRecyclerView(RecyclerView rview, List<BookCover> bookCovers){
         Log.d(TAG, "initRecyclerView: init recyclerview.");
 //        RecyclerView recyclerView = findViewById(R.id.recycler_view);
@@ -218,6 +273,14 @@ public class HomeActivity extends AppCompatActivity {
         rview.setAdapter(newAdapter);
 //        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         rview.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+    }
+
+    private void initRecyclerView2(RecyclerView rview, List<BookCover> bookCovers){
+        Log.d(TAG, "initRecyclerView: init recyclerview.");
+        newLibAdapter = new LibraryAdapter(HomeActivity.this, bookCovers);
+        rview.setAdapter(newLibAdapter);
+//        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        rview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
     }
 
     private void setupSearch(){

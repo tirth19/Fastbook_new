@@ -24,6 +24,18 @@
     <string name="explore_all">सब देखें</string>
     <string name="top_in_hindi">हिंदी में शीर्ष किताबें</string>
     <string name="see_all">सारी देखें</string>
+    <string name="continue_reading">पढ़ना जारी रखें</string>
+    <!-- Strings for Achievements -->
+    <string name="streak_title">7  दिन लगातार</string>
+    <string name="streak_description">लगातार 7 दिन तक फ़ास्टबुक प्रयोग करें</string>
+    <string name="first_book_title">पहला कदम</string>
+    <string name="first_book_description">अपनी पहली किताब का सारांश पढ़ें</string>
+    <string name="profile_picture_title">अतिसुन्दर</string>
+    <string name="profile_picture_description">अपनी प्रोफाइल फोटो अपलोड करें</string>
+    <string name="invite_title">यारों के संग</string>
+    <string name="invite_description">एक मित्र को ऐप प्रयोग करने के लिए आमंत्रित करें</string>
+    <string name="chapters_title">15 Chapters</string>
+    <string name="chapters_description">Finish reading 15 chapters across all books</string>
 </resources>
 
 

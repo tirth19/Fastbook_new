@@ -22,4 +22,17 @@
     <string name="explore_all">Explore all</string>
     <string name="top_in_hindi">Top books in Hindi</string>
     <string name="see_all">See All</string>
+    <string name="continue_reading">Continue Reading</string>
+    <!-- Strings for Achievements -->
+    <string name="streak_title">7 Day Streak</string>
+    <string name="streak_description">Use fastbook continuously for 7 days</string>
+    <string name="first_book_title">One Small Step</string>
+    <string name="first_book_description">Finish reading your first book summary</string>
+    <string name="profile_picture_title">Photogenic</string>
+    <string name="profile_picture_description">Upload your profile picture</string>
+    <string name="invite_title">I\'m popular</string>
+    <string name="invite_description">Invite a friend to use the app</string>
+    <string name="chapters_title">15 Chapters</string>
+    <string name="chapters_description">Finish reading 15 chapters across all books</string>
+
 </resources>
