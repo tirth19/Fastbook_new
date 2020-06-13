@@ -11,7 +11,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +50,8 @@ public class CollectionActivity extends AppCompatActivity {
         new LoadCollectionAsyncTask().execute(collectionTitle);
         pageName = findViewById(R.id.discover);
         pageName.setText(collectionTitle);
+
+
 
 
     }

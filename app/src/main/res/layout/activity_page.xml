@@ -36,6 +36,12 @@
             android:layout_height="wrap_content"
             android:id="@+id/nextButton"
             android:src="@drawable/ic_next"/>
+
     </LinearLayout>
+<!--    <ImageView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/increaseFont"-->
+<!--        android:src="@drawable/streak_lightning"/>-->
 
 </RelativeLayout>
