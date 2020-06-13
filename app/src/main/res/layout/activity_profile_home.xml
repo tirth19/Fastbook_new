@@ -344,7 +344,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="preview"
+                        android:text="@string/invite_title"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:id="@+id/achievement_title4"
@@ -353,7 +353,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="preview"
+                        android:text="@string/invite_description"
                         android:textSize="17sp"
                         android:id="@+id/achievement_description4"
                         android:maxLines="2"
@@ -407,7 +407,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="preview"
+                        android:text="@string/chapters_title"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:id="@+id/achievement_title5"
@@ -416,7 +416,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="preview"
+                        android:text="@string/chapters_description"
                         android:textSize="17sp"
                         android:id="@+id/achievement_description5"
                         android:maxLines="2"
@@ -449,15 +449,6 @@
 
         </LinearLayout>
         </ScrollView>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp"
-            android:text="@string/more_achievements"
-            android:layout_below="@id/achievement_recycler_view"
-            android:layout_centerHorizontal="true"
-            android:paddingTop="40dp"/>
     </RelativeLayout>
     <include layout="@layout/layout_bottom_navigation_view"/>
 </RelativeLayout>

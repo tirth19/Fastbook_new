@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -112,6 +113,26 @@ public class ProfileHomeActivity extends AppCompatActivity {
             }
 
         };
+        ImageView imageView1 = findViewById(R.id.achievementThumbnail1);
+        ProgressBar progressBar1 = findViewById(R.id.simpleProgressBar1);
+        setUpAchievement(imageView1,progressBar1 , "https://i.imgur.com/lAUU3af.png", 0, 7);
+
+        ImageView imageView2 = findViewById(R.id.achievementThumbnail2);
+        ProgressBar progressBar2 = findViewById(R.id.simpleProgressBar2);
+        setUpAchievement(imageView2,progressBar2 , "https://i.imgur.com/T6IjKow.png", 2, 7);
+
+        ImageView imageView3 = findViewById(R.id.achievementThumbnail3);
+        ProgressBar progressBar3 = findViewById(R.id.simpleProgressBar3);
+        setUpAchievement(imageView3,progressBar3 , "https://i.imgur.com/6HW4JIh.png", 3, 7);
+
+        ImageView imageView4 = findViewById(R.id.achievementThumbnail4);
+        ProgressBar progressBar4 = findViewById(R.id.simpleProgressBar4);
+        setUpAchievement(imageView4,progressBar4 , "https://i.imgur.com/adw58za.png", 4, 7);
+
+        ImageView imageView5 = findViewById(R.id.achievementThumbnail5);
+        ProgressBar progressBar5 = findViewById(R.id.simpleProgressBar5);
+        setUpAchievement(imageView5,progressBar5 , "https://i.imgur.com/iDN59HC.png", 5, 7);
+
         userRef.addListenerForSingleValueEvent(otherEventListener);
         loadAchievement(user);
         setupToolbar();
@@ -199,6 +220,14 @@ public class ProfileHomeActivity extends AppCompatActivity {
         menuItem.setChecked(true);
     }
 
+    private void setUpAchievement(ImageView imageView, ProgressBar progressBar, String thumbnail, int progAchieved, int target){
+        Glide.with(getApplicationContext())
+                .asBitmap()
+                .load(thumbnail)
+                .into(imageView);
+        progressBar.setMax(target);
+        progressBar.setProgress(progAchieved);
+    }
     private void initAchievementRecyclerView(){
         Log.d(TAG, "initAchievementRecyclerView: ");
 //        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);

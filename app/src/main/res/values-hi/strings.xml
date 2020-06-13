@@ -34,8 +34,8 @@
     <string name="profile_picture_description">अपनी प्रोफाइल फोटो अपलोड करें</string>
     <string name="invite_title">यारों के संग</string>
     <string name="invite_description">एक मित्र को ऐप प्रयोग करने के लिए आमंत्रित करें</string>
-    
-
+    <string name="chapters_title">15 Chapters</string>
+    <string name="chapters_description">Finish reading 15 chapters across all books</string>
 </resources>
 
 
