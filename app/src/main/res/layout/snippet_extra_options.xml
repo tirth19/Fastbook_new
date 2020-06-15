@@ -1,105 +1,70 @@
-<merge
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<merge>
+<androidx.constraintlayout.widget.ConstraintLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:layout_gravity="center_vertical">
 
-    <RelativeLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:id="@+id/pageRelLayout">
-<!--    <com.google.android.material.appbar.AppBarLayout-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_width="match_parent">-->
+<ImageView
+    android:id="@+id/index"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="20dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginBottom="20dp"
+    android:paddingLeft="20dp"
+    android:src="@drawable/ic_dots"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
 
-<!--        <androidx.appcompat.widget.Toolbar-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="?attr/actionBarSize"-->
-<!--            android:id="@+id/homeToolBar">-->
+<LinearLayout
+    android:id="@+id/pageNavigation"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:background="@drawable/white_rounded_button"
+    android:orientation="horizontal"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    android:layout_marginBottom="20dp">
 
-<!--            <RelativeLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent">-->
+    <ImageView
+        android:id="@+id/prevButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_previous" />
 
-<!--                <TextView-->
-<!--                    android:id="@+id/discover"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:layout_marginStart="10dp"-->
-<!--                    android:layout_marginLeft="10dp"-->
-<!--                    android:fontFamily="sans-serif"-->
-<!--                    android:text="Discover"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="25sp"-->
-<!--                    android:textStyle="bold" />-->
+    <TextView
+        android:id="@+id/pageNumberTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
+    <ImageView
+        android:id="@+id/nextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_next" />
 
-<!--                <ImageView-->
-<!--                    android:layout_width="25dp"-->
-<!--                    android:layout_height="25dp"-->
-<!--                    android:layout_alignParentRight="true"-->
-<!--                    android:layout_marginEnd="20dp"-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:id="@+id/profileMenuSearch"-->
-<!--                    android:src="@drawable/ic_search"-->
-<!--                    android:layout_marginRight="20dp" />-->
+</LinearLayout>
 
-<!--            </RelativeLayout>-->
+<Button
+    android:id="@+id/btn_markRead"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/button_background"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:text="Mark as read"
+    android:textSize="12sp"
+    android:textColor="@color/white"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
 
-<!--        </androidx.appcompat.widget.Toolbar>-->
-
-<!--    </com.google.android.material.appbar.AppBarLayout>-->
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:id="@+id/extraOptions"
-        android:layout_alignParentBottom="true">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_dots"
-            android:id="@+id/index"
-            android:paddingLeft="20dp"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/pageNavigation"
-            android:layout_centerHorizontal="true"
-            android:orientation="horizontal"
-            android:background="@drawable/white_rounded_button">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/prevButton"
-                android:src="@drawable/ic_previous"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/pageNumberTextView" />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/nextButton"
-                android:src="@drawable/ic_next"/>
-        </LinearLayout>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_markRead"
-            android:text="Mark as read"
-            android:textColor="@color/white"
-            android:background="@drawable/button_background"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"/>
-
-    </LinearLayout>
-
-    </RelativeLayout>
-
-
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 </merge>
