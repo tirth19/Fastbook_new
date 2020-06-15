@@ -1,10 +1,15 @@
 package com.gyansaarthi.fastbook.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.Html;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +24,8 @@ public class ViewPagerAdapter extends PagerAdapter {
     private List<Chunk> chunks;
     private LayoutInflater layoutInflater;
     private Context context;
+
+
 
     public ViewPagerAdapter(List<Chunk> chunks, Context context) {
         this.chunks = chunks;
@@ -35,6 +42,7 @@ public class ViewPagerAdapter extends PagerAdapter {
         return view.equals(object);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
@@ -48,6 +56,13 @@ public class ViewPagerAdapter extends PagerAdapter {
         heading.setText(chunks.get(position).getHeading());
         content.setText(Html.fromHtml(chunks.get(position).getContentText()));
         container.addView(view, 0);
+
+
+
+
+
+
+
         return view;
     }
 

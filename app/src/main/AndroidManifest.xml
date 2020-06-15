@@ -12,24 +12,38 @@
         android:roundIcon="@drawable/fastbook_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".IndexActivity"></activity>
-        <activity android:name=".CollectionActivity" />
-        <activity android:name=".PageActivity" />
-        <activity android:name=".NotificationView" />
-        <activity android:name=".LibraryActivity" />
-        <activity android:name=".SearchActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".BookCompleteActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".IndexActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".CollectionActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".PageActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".NotificationView"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".LibraryActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SearchActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".Home.HomeActivity" />
-        <activity android:name=".BookDescriptionActivity" />
-        <activity android:name=".Profile.ProfileHomeActivity" />
-        <activity android:name=".Profile.AccountSettingActivity" />
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Home.HomeActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".BookDescriptionActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Profile.ProfileHomeActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Profile.AccountSettingActivity"
+            android:screenOrientation="portrait"/>
         <receiver android:name=".AlarmReceiver" />
 
         <meta-data

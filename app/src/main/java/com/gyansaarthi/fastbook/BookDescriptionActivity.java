@@ -31,6 +31,8 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 public class BookDescriptionActivity extends AppCompatActivity {
     DatabaseReference bookNodeRef, bookNameRef;
     Context mContext;
+    Boolean bookFinished;
+
 
     private static final String TAG = "BookDescriptionActivity";
     private static final int ACTIVITY_NUM = 1;
@@ -79,6 +81,7 @@ public class BookDescriptionActivity extends AppCompatActivity {
                 String thumbnail= dataSnapshot.child("thumbnail").getValue(String.class);
                 String description= dataSnapshot.child("book_description").getValue(String.class);
                 long totalPages=dataSnapshot.child("contents").getChildrenCount();
+                bookFinished = false;
                 bookName.setText(title);
                 final ImageView bookCover = findViewById(R.id.bookcoverImageView);
                 bookCover.setClipToOutline(true);
@@ -92,6 +95,8 @@ public class BookDescriptionActivity extends AppCompatActivity {
                 userRef.child("library").child(bookTitle).child("thumbnail").setValue(thumbnail);
                 userRef.child("library").child(bookTitle).child("total_pages").setValue(totalPages);
                 userRef.child("library").child(bookTitle).child("pages_read").setValue(pagesRead);
+                userRef.child("library").child(bookTitle).child("finished").setValue(bookFinished);
+
             }
 
             @Override

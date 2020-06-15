@@ -32,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.gyansaarthi.fastbook.Adapters.AchievementAdapter;
 //import com.gyansaarthi.fastbook.Models.UserAccountSettings;
 //import com.gyansaarthi.fastbook.Models.UserSettings;
+import com.gyansaarthi.fastbook.BuildConfig;
 import com.gyansaarthi.fastbook.Objects.Achievement;
 import com.gyansaarthi.fastbook.Objects.User;
 import com.gyansaarthi.fastbook.R;
@@ -58,7 +59,7 @@ public class ProfileHomeActivity extends AppCompatActivity {
     private TextView mDisplayName;
     private CircleImageView mProfilePhoto;
     private Context mContext = ProfileHomeActivity.this;
-    private ImageView profilemenu, thumbnail;
+    private ImageView profilemenu, thumbnail, shareApp;
 
     //firebase
     private FirebaseAuth mAuth;
@@ -79,6 +80,7 @@ public class ProfileHomeActivity extends AppCompatActivity {
         mProfilePhoto = findViewById(R.id.profile_photo);
         profilemenu = findViewById(R.id.profileMenu);
         mDisplayName = findViewById(R.id.username);
+        shareApp = findViewById(R.id.shareApp);
 
         Log.d(TAG, "onCreate: ");
 
@@ -92,6 +94,14 @@ public class ProfileHomeActivity extends AppCompatActivity {
 
         achievementList = new ArrayList<>();
         setupBottomNavigationView();
+        shareApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                initShare();
+
+            }
+        });
 
 
 
@@ -138,6 +148,17 @@ public class ProfileHomeActivity extends AppCompatActivity {
         userRef.addListenerForSingleValueEvent(otherEventListener);
         loadAchievement(user);
         setupToolbar();
+    }
+
+    private void initShare() {
+
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "FastBook");
+        String shareMessage= "Read books in 15 mins.\n";
+        shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+        startActivity(Intent.createChooser(shareIntent, "Share now"));
     }
 
     private void setStreak(int lastLoginDay, int streakLength, String user){

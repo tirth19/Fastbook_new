@@ -14,34 +14,14 @@
         android:overScrollMode="ifContentScrolls"
         android:clipToPadding="false" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/pageNavigation"
-        android:layout_centerHorizontal="true"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/white_rounded_button">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/prevButton"
-            android:src="@drawable/ic_previous"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/pageNumberTextView" />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/nextButton"
-            android:src="@drawable/ic_next"/>
+        android:id="@+id/relLayout1">
 
-    </LinearLayout>
-<!--    <ImageView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/increaseFont"-->
-<!--        android:src="@drawable/streak_lightning"/>-->
+        <include layout="@layout/snippet_extra_options"/>
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

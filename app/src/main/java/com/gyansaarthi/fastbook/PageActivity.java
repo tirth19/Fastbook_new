@@ -6,11 +6,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +44,12 @@ public class PageActivity extends AppCompatActivity {
     Context mContext;
     private static int currentPage, numOfBooks;
     List<BookCover> bookCoverListrand;
+    ImageView mIndex;
+    Button mMarkRead;
+    RelativeLayout relativeLayout;
+    boolean gone = false;
+    private String bookName;
+
 
 
     @Override
@@ -55,23 +67,30 @@ public class PageActivity extends AppCompatActivity {
 
         pageNumberTextView = findViewById(R.id.pageNumberTextView);
         pageNumberTextView.setText(1 + " of " + numOfBooks);
-        pageNumberTextView.setOnClickListener(new View.OnClickListener() {
+        mMarkRead = findViewById(R.id.btn_markRead);
+        mMarkRead.setVisibility(View.GONE);
+        mIndex = findViewById(R.id.index);
+        mIndex.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle extras = new Bundle();
                 //Adding key value pairs to this bundle
                 //there are quite a lot data types you can store in a bundle
                 extras.putString("BOOK_NAME",bookTitle);
+
                 Intent chunkIntent = new Intent(getApplicationContext(), IndexActivity.class);
                 chunkIntent.putExtras(extras);
                 startActivity(chunkIntent);
             }
         });
+
+
     }
 
     private class PageListener extends ViewPager.SimpleOnPageChangeListener {
 
 
+        @SuppressLint("ClickableViewAccessibility")
         public void onPageSelected(int position) {
             Log.i(TAG, "page selected " + position);
             currentPage = position+1;
@@ -81,23 +100,73 @@ public class PageActivity extends AppCompatActivity {
             pageNumberTextView = findViewById(R.id.pageNumberTextView);
             pageNumberTextView.setText(currentPage + " of " + numOfBooks);
 
+            if(currentPage == numOfBooks){
+                mMarkRead.setVisibility(View.VISIBLE);
+                mMarkRead.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+            }else{
+                mMarkRead.setVisibility(View.GONE);
+            }
+
+            mMarkRead.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle extras = new Bundle();
+                    final String bookTitle= getIntent().getExtras().getString("BOOK_NAME");
+                    //Adding key value pairs to this bundle
+                    //there are quite a lot data types you can store in a bundle
+                    extras.putString("BOOK_NAME",bookTitle);
+                    extras.putString("BOOK_DISPLAY_NAME",bookName);
+
+                    Intent intent = new Intent(PageActivity.this, BookCompleteActivity.class);
+                    intent.putExtras(extras);
+                    startActivity(intent);
+                }
+            });
+
+//            final LinearLayout extraOptions = findViewById(R.id.extraOptions);
+//            final RelativeLayout relativeLayout1 = findViewById(R.id.pageRelLayout);
+//
+//            relativeLayout1.setOnTouchListener(new View.OnTouchListener() {
+//                @Override
+//                public boolean onTouch(View v, MotionEvent event) {
+//
+//                    if(event.getAction() == MotionEvent.ACTION_DOWN){
+//                        if(!gone){
+//                            extraOptions.setVisibility(View.GONE);
+//                            gone = true;
+//                        }else{
+//                            extraOptions.setVisibility(View.VISIBLE);
+//                            gone = false;
+//                        }
+//                    }
+//
+//                    return true;
+//                }
+//            });
+
         }
     }
 
     private void loadBook(String bookTitle, final int chapter){
         Log.d(TAG, "loadBook: ");
-        bookRef= FirebaseDatabase.getInstance().getReference("books/"+bookTitle+"/contents");
+        bookRef= FirebaseDatabase.getInstance().getReference("books/"+bookTitle);
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                for(DataSnapshot ds : dataSnapshot.child("contents").getChildren()) {
                     chunks.add(new Chunk(
                             ds.child("page_heading").getValue(String.class),
                             ds.child("page_content").getValue(String.class)
                     ));
                 }
+                bookName =dataSnapshot.child("book_title").getValue(String.class);
 
-                numOfBooks = (int) dataSnapshot.getChildrenCount();
+                numOfBooks = (int) dataSnapshot.child("contents").getChildrenCount();
                 Log.d(TAG, "Value is: " + numOfBooks);
                 //Toast.makeText(ChunkActivity.this, "Num of pages" + numOfBooks, Toast.LENGTH_LONG).show();
                 mAdapter= new ViewPagerAdapter(chunks, PageActivity.this);

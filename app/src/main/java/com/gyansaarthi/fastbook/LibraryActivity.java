@@ -43,7 +43,7 @@ public class LibraryActivity extends AppCompatActivity {
     private static final String TAG = "CollectionActivity";
 
     DatabaseReference userLibRef;
-    List<BookCover> bookCoverList ;
+    List<BookCover> bookCoverList, readBookCoverList ;
     private static final int ACTIVITY_NUM = 3;
 
     LibraryAdapter newAdapter;
@@ -56,6 +56,7 @@ public class LibraryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library);
         bookCoverList = new ArrayList<>();
+        readBookCoverList = new ArrayList<>();
         new LoadCollectionAsyncTask().execute("library");
         pageName = findViewById(R.id.discover);
         pageName.setText("Your Library");
@@ -74,10 +75,11 @@ public class LibraryActivity extends AppCompatActivity {
             final String user = FirebaseAuth.getInstance().getUid();
             userLibRef= FirebaseDatabase.getInstance().getReference("users/"+user);
 
-            ValueEventListener eventListener = new ValueEventListener() {
+            ValueEventListener eventListenerLibrary = new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                        if(!ds.child("finished").getValue(Boolean.class))
                         bookCoverList.add(new BookCover(
                                 ds.child("title").getValue(String.class),
                                 ds.child("author").getValue(String.class),
@@ -99,7 +101,37 @@ public class LibraryActivity extends AppCompatActivity {
                 //creating adapter object and setting it to recyclerview
 //            BookAdapter adapter = new BookAdapter(MainActivity.this, bookList);
             };
-            userLibRef.child(strings[0]).addListenerForSingleValueEvent(eventListener);
+
+            ValueEventListener eventListenerFinished = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                        if(ds.child("finished").getValue(Boolean.class))
+                            readBookCoverList.add(new BookCover(
+                                    ds.child("title").getValue(String.class),
+                                    ds.child("author").getValue(String.class),
+                                    ds.child("thumbnail").getValue(String.class),
+                                    ds.child("total_pages").getValue(int.class),
+                                    ds.child("pages_read").getValue(int.class)
+                            ));
+                    }
+
+                    long numOfBooks=dataSnapshot.getChildrenCount();
+                    Log.d(TAG, "Value is: " + numOfBooks);
+                    RecyclerView finishedRecycler = findViewById(R.id.finished_recycler);
+                    initRecyclerView(finishedRecycler, readBookCoverList);
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(LibraryActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
+                }
+                //creating adapter object and setting it to recyclerview
+//            BookAdapter adapter = new BookAdapter(MainActivity.this, bookList);
+            };
+
+
+            userLibRef.child(strings[0]).addListenerForSingleValueEvent(eventListenerLibrary);
+            userLibRef.child(strings[0]).addListenerForSingleValueEvent(eventListenerFinished);
             return null;
         }
 
