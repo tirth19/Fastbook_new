@@ -20,9 +20,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.gyansaarthi.fastbook.LoginActivity;
-import com.gyansaarthi.fastbook.MainActivity;
 import com.gyansaarthi.fastbook.R;
 
 public class SignOutFragment extends Fragment {
