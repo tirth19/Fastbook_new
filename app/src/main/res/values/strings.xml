@@ -23,6 +23,9 @@
     <string name="top_in_hindi">Top books in Hindi</string>
     <string name="see_all">See All</string>
     <string name="continue_reading">Continue Reading</string>
+    <string name="you_earned_xp">You earned an extra 50 XP for finishing the book.</string>
+    <string name="your_xp_is">Your XP is </string>
+
     <!-- Strings for Achievements -->
     <string name="streak_title">7 Day Streak</string>
     <string name="streak_description">Use fastbook continuously for 7 days</string>

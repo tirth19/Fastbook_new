@@ -25,6 +25,9 @@
     <string name="top_in_hindi">हिंदी में शीर्ष किताबें</string>
     <string name="see_all">सारी देखें</string>
     <string name="continue_reading">पढ़ना जारी रखें</string>
+    <string name="you_earned_xp">You earned an extra 50 XP for finishing the book.</string>
+    <string name="your_xp_is">Your XP is </string>
+
     <!-- Strings for Achievements -->
     <string name="streak_title">7  दिन लगातार</string>
     <string name="streak_description">लगातार 7 दिन तक फ़ास्टबुक प्रयोग करें</string>

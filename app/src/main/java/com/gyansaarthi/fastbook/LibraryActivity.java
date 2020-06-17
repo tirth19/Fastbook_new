@@ -45,6 +45,7 @@ public class LibraryActivity extends AppCompatActivity {
     DatabaseReference userLibRef;
     List<BookCover> bookCoverList, readBookCoverList ;
     private static final int ACTIVITY_NUM = 3;
+    public int totalBooksRead;
 
     LibraryAdapter newAdapter;
     TextView pageName;
@@ -54,6 +55,7 @@ public class LibraryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        totalBooksRead=0;
         setContentView(R.layout.activity_library);
         bookCoverList = new ArrayList<>();
         readBookCoverList = new ArrayList<>();
@@ -106,7 +108,7 @@ public class LibraryActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                        if(ds.child("finished").getValue(Boolean.class))
+                        if(ds.child("finished").getValue(Boolean.class)) {
                             readBookCoverList.add(new BookCover(
                                     ds.child("title").getValue(String.class),
                                     ds.child("author").getValue(String.class),
@@ -114,6 +116,8 @@ public class LibraryActivity extends AppCompatActivity {
                                     ds.child("total_pages").getValue(int.class),
                                     ds.child("pages_read").getValue(int.class)
                             ));
+                            totalBooksRead=totalBooksRead+1;
+                        }
                     }
 
                     long numOfBooks=dataSnapshot.getChildrenCount();
@@ -159,5 +163,15 @@ public class LibraryActivity extends AppCompatActivity {
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
         menuItem.setChecked(true);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        final String user = FirebaseAuth.getInstance().getUid();
+
+        DatabaseReference userRef=FirebaseDatabase.getInstance().getReference("users/"+user);
+        userRef.child("stats").child("total_books_read").setValue(totalBooksRead);
+
+        Toast.makeText(mContext, "on Books Read is "+ totalBooksRead , Toast.LENGTH_SHORT).show();
     }
 }

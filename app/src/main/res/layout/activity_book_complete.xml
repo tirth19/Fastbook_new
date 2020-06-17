@@ -53,6 +53,7 @@
             android:textSize="24sp"
             android:paddingBottom="20dp"/>
 
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,6 +65,16 @@
             android:textColor="@color/black"
             android:text="book_name"
             android:maxLines="2"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/open_sans"
+            android:gravity="center_horizontal"
+            android:text="@string/you_earned_xp"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:paddingBottom="20dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"

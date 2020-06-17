@@ -52,6 +52,11 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.BookCove
                 .into(holder.thumbnail);
         holder.authorName.setText(bookCover.getBook_author());
         holder.simpleProgressBar.setProgress(bookCover.getPages_read());
+        int mPagesRead = bookCover.getPages_read();
+        int mPagesTotal = bookCover.getTotal_pages();
+        Log.d(TAG, "onBindViewHolder: "+ mPagesRead+"total" +mPagesTotal);
+        //        Toast.makeText(mCtx, "pagesread" + bookCover.getPages_read(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mCtx, "total" + bookCover.getTotal_pages(), Toast.LENGTH_SHORT).show();
         holder.simpleProgressBar.setMax(bookCover.getTotal_pages());
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override

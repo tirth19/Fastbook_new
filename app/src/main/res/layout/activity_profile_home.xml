@@ -116,6 +116,12 @@
                     android:id="@+id/shareApp"/>
             </LinearLayout>
         </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/relLayout2"
+            android:id="@+id/achievement_header_linear_layout">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -124,13 +130,29 @@
             android:textStyle="bold"
             android:textColor="@color/black"
             android:id="@+id/achievement_header"
-            android:layout_below="@+id/relLayout2"
             android:paddingLeft="10dp"
             android:paddingTop="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/your_xp_is"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/xp_text_view"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"/>
+        </LinearLayout>
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/achievement_header">
+            android:layout_below="@id/achievement_header_linear_layout">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

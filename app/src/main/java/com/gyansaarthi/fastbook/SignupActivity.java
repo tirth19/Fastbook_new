@@ -1,16 +1,17 @@
 package com.gyansaarthi.fastbook;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -31,13 +32,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.gyansaarthi.fastbook.Home.HomeActivity;
 import com.gyansaarthi.fastbook.Objects.User;
 
-public class LoginActivity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity {
 
     private static final int GOOGLE_SIGN_IN_REQUEST_CODE = 123;
     SignInButton googleSignIn;
     GoogleSignInOptions gso;
     GoogleSignInClient signInClient;
     ImageView logo;
+    TextView signInActivity;
 
     FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -46,11 +48,12 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        setContentView(R.layout.activity_signup);
         googleSignIn = findViewById(R.id.btn_google_signin);
+        signInActivity= findViewById(R.id.link_to_sign_in_activity);
         logo = findViewById(R.id.logo);
         logo.setClipToOutline(true);
-
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -79,8 +82,26 @@ public class LoginActivity extends AppCompatActivity {
                 startActivityForResult(signin_popup, GOOGLE_SIGN_IN_REQUEST_CODE);
             }
         });
+        signInActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signInActivity = new Intent(SignupActivity.this, LoginActivity.class);
+                startActivity(signInActivity);
+            }
+        });
     }
 
+    private void writeNewUser(String userId, String name, String email) {
+        User user = new User(name, email);
+
+        mDatabase.child("users").child(userId).setValue(user);
+        mDatabase.child("users").child(userId).child("stats").child("xp_score").setValue(100);
+        mDatabase.child("users").child(userId).child("stats").child("total_books_read").setValue(0);
+        mDatabase.child("users").child(userId).child("stats").child("streak_length").setValue(0);
+        mDatabase.child("users").child(userId).child("stats").child("invites").setValue(0);
+        mDatabase.child("users").child(userId).child("stats").child("pages_read").setValue(0);
+        mDatabase.child("users").child(userId).child("stats").child("last_login").setValue(0);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -99,6 +120,8 @@ public class LoginActivity extends AppCompatActivity {
 
                         //if user does no exists - add him to firebase database
                         FirebaseUser user = task.getResult().getUser();
+                        writeNewUser(user.getUid(), usernameFromEmail(user.getEmail()), user.getEmail());
+
 
                         //check if user already exists
                         startActivity(new Intent(getApplicationContext(), HomeActivity.class));

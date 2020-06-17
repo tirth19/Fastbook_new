@@ -49,6 +49,7 @@ public class PageActivity extends AppCompatActivity {
     RelativeLayout relativeLayout;
     boolean gone = false;
     private String bookName;
+    private int xpScore, currentXp;
 
 
 
@@ -56,6 +57,7 @@ public class PageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_page);
+        xpScore=10;
         final String bookTitle= getIntent().getExtras().getString("BOOK_NAME");
         final int chapter= getIntent().getExtras().getInt("CHAPTER");
 
@@ -63,6 +65,7 @@ public class PageActivity extends AppCompatActivity {
         bookCoverListrand = new ArrayList<>();
         mContext=this;
         loadBook(bookTitle, chapter);
+        getCurrentXp();
         TextView pageNumberTextView;
 
         pageNumberTextView = findViewById(R.id.pageNumberTextView);
@@ -86,6 +89,23 @@ public class PageActivity extends AppCompatActivity {
 
 
     }
+    private void getCurrentXp(){
+        final String user = FirebaseAuth.getInstance().getUid();
+        DatabaseReference userRef=FirebaseDatabase.getInstance().getReference("users/"+user);
+        ValueEventListener eventListener2 = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                currentXp= dataSnapshot.child("stats").child("xp_score").getValue(int.class);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(PageActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
+            }
+
+        };
+        userRef.addListenerForSingleValueEvent(eventListener2);
+
+    }
 
     private class PageListener extends ViewPager.SimpleOnPageChangeListener {
 
@@ -99,6 +119,7 @@ public class PageActivity extends AppCompatActivity {
 
             pageNumberTextView = findViewById(R.id.pageNumberTextView);
             pageNumberTextView.setText(currentPage + " of " + numOfBooks);
+            xpScore= xpScore+10;
 
             if(currentPage == numOfBooks){
                 mMarkRead.setVisibility(View.VISIBLE);
@@ -115,6 +136,8 @@ public class PageActivity extends AppCompatActivity {
             mMarkRead.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    xpScore=xpScore+50;
+                    Toast.makeText(mContext, "Current XP is" + xpScore, Toast.LENGTH_SHORT).show();
                     Bundle extras = new Bundle();
                     final String bookTitle= getIntent().getExtras().getString("BOOK_NAME");
                     //Adding key value pairs to this bundle
@@ -127,27 +150,6 @@ public class PageActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-
-//            final LinearLayout extraOptions = findViewById(R.id.extraOptions);
-//            final RelativeLayout relativeLayout1 = findViewById(R.id.pageRelLayout);
-//
-//            relativeLayout1.setOnTouchListener(new View.OnTouchListener() {
-//                @Override
-//                public boolean onTouch(View v, MotionEvent event) {
-//
-//                    if(event.getAction() == MotionEvent.ACTION_DOWN){
-//                        if(!gone){
-//                            extraOptions.setVisibility(View.GONE);
-//                            gone = true;
-//                        }else{
-//                            extraOptions.setVisibility(View.VISIBLE);
-//                            gone = false;
-//                        }
-//                    }
-//
-//                    return true;
-//                }
-//            });
 
         }
     }
@@ -217,7 +219,24 @@ public class PageActivity extends AppCompatActivity {
         final String user = FirebaseAuth.getInstance().getUid();
         final String bookTitle= getIntent().getExtras().getString("BOOK_NAME");
 
+
         DatabaseReference userRef=FirebaseDatabase.getInstance().getReference("users/"+user);
-        userRef.child("/library").child(bookTitle).child("pages_read").setValue(pageNumber);
+        ValueEventListener eventListener2 = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                currentXp= dataSnapshot.child("stats").child("xp_score").getValue(int.class);
+                }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(PageActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
+            }
+            //creating adapter object and setting it to recyclerview
+//            BookAdapter adapter = new BookAdapter(MainActivity.this, bookList);
+        };
+        userRef.addListenerForSingleValueEvent(eventListener2);
+        userRef.child("library").child(bookTitle).child("pages_read").setValue(pageNumber);
+        currentXp=currentXp+xpScore;
+
+        userRef.child("stats").child("xp_score").setValue(currentXp);
     }
 }

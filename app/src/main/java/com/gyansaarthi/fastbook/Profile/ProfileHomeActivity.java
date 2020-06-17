@@ -34,6 +34,7 @@ import com.gyansaarthi.fastbook.Adapters.AchievementAdapter;
 //import com.gyansaarthi.fastbook.Models.UserSettings;
 import com.gyansaarthi.fastbook.BuildConfig;
 import com.gyansaarthi.fastbook.Objects.Achievement;
+import com.gyansaarthi.fastbook.LibraryActivity;
 import com.gyansaarthi.fastbook.Objects.User;
 import com.gyansaarthi.fastbook.R;
 import com.gyansaarthi.fastbook.Utils.BottomNavigationViewHelper;
@@ -56,7 +57,7 @@ public class ProfileHomeActivity extends AppCompatActivity {
 
 
 
-    private TextView mDisplayName;
+    private TextView mDisplayName, mXp, mTotalBooksRead;
     private CircleImageView mProfilePhoto;
     private Context mContext = ProfileHomeActivity.this;
     private ImageView profilemenu, thumbnail, shareApp;
@@ -67,13 +68,14 @@ public class ProfileHomeActivity extends AppCompatActivity {
     private DatabaseReference myRef, userRef, lastLoginRef;
     List<Achievement> achievementList ;
     AchievementAdapter mAchAdapter;
-    int lastLoginDay, streakLength;
+    int lastLoginDay, streakLength, currentXP, totalBooksRead;
+    static int invites = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+/*        Toast.makeText(mContext, "Books Read is "+ totalBooksRead, Toast.LENGTH_SHORT).show();*/
         setContentView(R.layout.activity_profile_home);
 
         mDisplayName = findViewById(R.id.display_name);
@@ -81,6 +83,7 @@ public class ProfileHomeActivity extends AppCompatActivity {
         profilemenu = findViewById(R.id.profileMenu);
         mDisplayName = findViewById(R.id.username);
         shareApp = findViewById(R.id.shareApp);
+        mXp= findViewById(R.id.xp_text_view);
 
         Log.d(TAG, "onCreate: ");
 
@@ -103,9 +106,6 @@ public class ProfileHomeActivity extends AppCompatActivity {
             }
         });
 
-
-
-
         //Getting user reference in db
         final String user = FirebaseAuth.getInstance().getUid();
         userRef= FirebaseDatabase.getInstance().getReference("users/"+user);
@@ -113,8 +113,8 @@ public class ProfileHomeActivity extends AppCompatActivity {
         ValueEventListener otherEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                lastLoginDay = dataSnapshot.child("last_login").getValue(int.class);
-                streakLength = dataSnapshot.child("streak_length").getValue(int.class);
+                lastLoginDay = dataSnapshot.child("stats").child("last_login").getValue(int.class);
+                streakLength = dataSnapshot.child("stats").child("streak_length").getValue(int.class);
                 setStreak(lastLoginDay, streakLength, user);
             }
             @Override
@@ -131,15 +131,15 @@ public class ProfileHomeActivity extends AppCompatActivity {
 
         ImageView imageView2 = findViewById(R.id.achievementThumbnail2);
         ProgressBar progressBar2 = findViewById(R.id.simpleProgressBar2);
-        setUpAchievement(imageView2,progressBar2 , "https://i.imgur.com/T6IjKow.png", 2, 7);
+        setUpAchievement(imageView2,progressBar2 , "https://i.imgur.com/T6IjKow.png", 0, 1);
 
         ImageView imageView3 = findViewById(R.id.achievementThumbnail3);
         ProgressBar progressBar3 = findViewById(R.id.simpleProgressBar3);
-        setUpAchievement(imageView3,progressBar3 , "https://i.imgur.com/6HW4JIh.png", 3, 7);
+        setUpAchievement(imageView3,progressBar3 , "https://i.imgur.com/6HW4JIh.png", 0, 1);
 
         ImageView imageView4 = findViewById(R.id.achievementThumbnail4);
         ProgressBar progressBar4 = findViewById(R.id.simpleProgressBar4);
-        setUpAchievement(imageView4,progressBar4 , "https://i.imgur.com/adw58za.png", 4, 7);
+        setUpAchievement(imageView4,progressBar4 , "https://i.imgur.com/adw58za.png", invites, 7);
 
         ImageView imageView5 = findViewById(R.id.achievementThumbnail5);
         ProgressBar progressBar5 = findViewById(R.id.simpleProgressBar5);
@@ -159,6 +159,9 @@ public class ProfileHomeActivity extends AppCompatActivity {
         shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
         shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
         startActivity(Intent.createChooser(shareIntent, "Share now"));
+        invites = invites + 1;
+        ProgressBar progressBar4 = findViewById(R.id.simpleProgressBar4);
+        setProgressAchieved(invites, progressBar4);
     }
 
     private void setStreak(int lastLoginDay, int streakLength, String user){
@@ -170,16 +173,16 @@ public class ProfileHomeActivity extends AppCompatActivity {
             streakLength = streakLength + 1;
 
             userRef=FirebaseDatabase.getInstance().getReference("users/"+user);
-            userRef.child("last_login").setValue(Calendar.getInstance().get(Calendar.DAY_OF_YEAR));
-            userRef.child("streak_length").setValue(streakLength);
+            userRef.child("stats").child("last_login").setValue(Calendar.getInstance().get(Calendar.DAY_OF_YEAR));
+            userRef.child("stats").child("streak_length").setValue(streakLength);
 
         } else {
 
             userRef=FirebaseDatabase.getInstance().getReference("users/"+user);
-            userRef.child("last_login").setValue(Calendar.getInstance().get(Calendar.DAY_OF_YEAR));
+            userRef.child("stats").child("last_login").setValue(Calendar.getInstance().get(Calendar.DAY_OF_YEAR));
             if(lastLoginDay !=thisDay){
                 streakLength =1;
-                userRef.child("streak_length").setValue(streakLength);
+                userRef.child("stats").child("streak_length").setValue(streakLength);
             }
         }
 
@@ -260,9 +263,16 @@ public class ProfileHomeActivity extends AppCompatActivity {
         ValueEventListener otherEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                streakLength = dataSnapshot.child("streak_length").getValue(int.class);
+                streakLength = dataSnapshot.child("stats").child("streak_length").getValue(int.class);
+                currentXP = dataSnapshot.child("stats").child("xp_score").getValue(int.class);
+                totalBooksRead = dataSnapshot.child("stats").child("total_books_read").getValue(int.class);
+
                 ProgressBar progressBar1 = findViewById(R.id.simpleProgressBar1);
                 setProgressAchieved(streakLength, progressBar1);
+                ProgressBar progressBar2 = findViewById(R.id.simpleProgressBar2);
+                setProgressAchieved(totalBooksRead, progressBar2);
+                mXp.setText(String.valueOf(currentXP));
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
